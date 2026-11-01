@@ -1,4 +1,4 @@
--- KAVIN PRODUCTION DATABASE SCHEMA
+-- BE HAPPY ENTERTAINMENT DATABASE SCHEMA
 -- Complete Supabase PostgreSQL Architecture with RLS and Security Policies
 
 -- Enable UUID extension
@@ -134,7 +134,7 @@ CREATE INDEX IF NOT EXISTS idx_enquiries_created ON public.enquiries(created_at 
 -- 8. COMPANY SETTINGS TABLE
 CREATE TABLE IF NOT EXISTS public.company_settings (
   id INTEGER PRIMARY KEY DEFAULT 1,
-  brand_name TEXT NOT NULL DEFAULT 'KAVIN PRODUCTION',
+  brand_name TEXT NOT NULL DEFAULT 'BE HAPPY ENTERTAINMENT',
   tagline TEXT NOT NULL DEFAULT 'WE CREATE. WE CAPTURE. WE TELL STORIES.',
   producer_name TEXT NOT NULL DEFAULT 'Kavin',
   producer_title TEXT NOT NULL DEFAULT 'Producer & Founder',

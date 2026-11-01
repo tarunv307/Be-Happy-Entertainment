@@ -37,7 +37,7 @@ export const ProjectDetailPage: React.FC = () => {
         <Film className="w-16 h-16 text-[#D6AD68]/40 mb-4" />
         <h1 className="font-cinematic text-3xl font-black">Title Not Found</h1>
         <p className="text-[#7E7E7E] text-sm mt-2 max-w-md">
-          The requested film could not be located in the Kavin Production catalog.
+          The requested film could not be located in the Be Happy Entertainment catalog.
         </p>
         <Link
           to="/movies"
@@ -57,7 +57,7 @@ export const ProjectDetailPage: React.FC = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${production.title} — Kavin Production`,
+        title: `${production.title} — Be Happy Entertainment`,
         text: production.tagline || production.short_description,
         url: window.location.href,
       }).catch(() => {});
@@ -218,7 +218,7 @@ export const ProjectDetailPage: React.FC = () => {
 
                 <div className="flex justify-between py-1">
                   <span className="text-[#7E7E7E]">Production House:</span>
-                  <strong className="text-white">Kavin Production</strong>
+                  <strong className="text-white">Be Happy Entertainment</strong>
                 </div>
               </div>
             </div>
@@ -307,7 +307,7 @@ export const ProjectDetailPage: React.FC = () => {
               MORE RELEASES
             </span>
             <h2 className="font-cinematic font-black text-2xl sm:text-3xl text-white uppercase tracking-wide mt-1 mb-8">
-              EXPLORE MORE FROM KAVIN PRODUCTION
+              EXPLORE MORE FROM BE HAPPY ENTERTAINMENT
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -10,7 +10,7 @@ export const TypographyMarquee: React.FC<TypographyMarqueeProps> = ({
   speed = 'normal',
 }) => {
   const words = [
-    'KAVIN PRODUCTION',
+    'BE HAPPY ENTERTAINMENT',
     'CINEMATIC STORYTELLING',
     'CREATIVE MEDIA',
     'VISUAL EXPERIENCES',

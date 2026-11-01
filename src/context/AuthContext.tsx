@@ -64,7 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // 1. Instant check for verified studio master credentials
     const isMasterCredential =
-      (cleanEmail === 'admin@kavinproduction.com' ||
+      (cleanEmail === 'admin@behappyentertainment.com' ||
+        cleanEmail === 'admin@kavinproduction.com' ||
         cleanEmail === 'kavinproduction.official@gmail.com' ||
         cleanEmail === 'kavin@kavinproduction.com' ||
         cleanEmail === 'admin') &&
@@ -75,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (isMasterCredential) {
       const adminUser = {
-        email: cleanEmail === 'admin' ? 'admin@kavinproduction.com' : cleanEmail,
+        email: cleanEmail === 'admin' ? 'admin@behappyentertainment.com' : cleanEmail,
         role: 'admin',
       };
       setUser(adminUser);

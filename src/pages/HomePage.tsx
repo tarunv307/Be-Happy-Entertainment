@@ -58,7 +58,7 @@ export const HomePage: React.FC = () => {
         <div className="flex whitespace-nowrap animate-marquee-left">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-center gap-6 sm:gap-10 text-xs sm:text-sm uppercase tracking-[0.3em] text-[#D6AD68] font-cinematic font-bold px-4">
-              <span>KAVIN PRODUCTION</span>
+              <span>BE HAPPY ENTERTAINMENT</span>
               <span className="w-1.5 h-1.5 rounded-full bg-white" />
               <span className="text-white">DREAM. CREATE. ENTERTAIN.</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#D6AD68]" />
@@ -191,7 +191,7 @@ export const HomePage: React.FC = () => {
         <OttCarousel
           title="UPCOMING RELEASES"
           badge="COMING SOON"
-          subtitle="NEXT ON KAVIN PRODUCTION"
+          subtitle="NEXT ON BE HAPPY ENTERTAINMENT"
           items={upcomingReleases}
           onPlayTrailer={handlePlayVideo}
           aspectRatio="landscape"
@@ -249,7 +249,7 @@ export const HomePage: React.FC = () => {
                   Live Stage Sound Engineering & DJ Direction
                 </h3>
                 <p className="text-xs sm:text-sm text-[#B5B5B5] mt-2 leading-relaxed">
-                  “Same Passion, Different Medium. Ideas | Stories | Sound | Beyond.” From large-scale live concert audio to festival DJ performances, Kavin Production engineers immersive sonic power tailored for energized crowds.
+                  “Same Passion, Different Medium. Ideas | Stories | Sound | Beyond.” From large-scale live concert audio to festival DJ performances, Be Happy Entertainment engineers immersive sonic power tailored for energized crowds.
                 </p>
               </div>
             </div>

@@ -132,7 +132,7 @@ export const OttHeroBanner: React.FC<OttHeroBannerProps> = ({ productions, onPla
       {/* Main Content Area */}
       <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 sm:pb-24">
         <div className="max-w-2xl sm:max-w-3xl flex flex-col items-start gap-3 sm:gap-5">
-          {/* Animated Kavin Production Monogram & Badge Row */}
+          {/* Animated Be Happy Entertainment Monogram & Badge Row */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 animate-fade-in">
             <div className="bg-black/70 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#D6AD68]/40 shadow-[0_0_20px_rgba(214,173,104,0.3)]">
               <KavinLogo variant="compact" size="sm" animated={true} showTagline={false} />

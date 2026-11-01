@@ -228,7 +228,7 @@ export const CinematicPlayerModal: React.FC<CinematicPlayerModalProps> = ({
                 {title}
               </h2>
               <span className="text-[9px] sm:text-[11px] text-[#D6AD68] tracking-widest uppercase truncate hidden xs:inline">
-                KAVIN PRODUCTION THEATER
+                BE HAPPY ENTERTAINMENT THEATER
               </span>
             </div>
           </div>

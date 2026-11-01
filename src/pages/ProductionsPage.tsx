@@ -58,7 +58,7 @@ export const ProductionsPage: React.FC = () => {
             </h1>
             <p className="text-sm sm:text-base text-[#6B6861] font-light leading-relaxed">
               A curated catalog of cinematic narratives, commercials, and visual arts produced by
-              Kavin Production.
+              Be Happy Entertainment.
             </p>
           </div>
         </ScrollReveal>

@@ -53,7 +53,7 @@ export const MoviesPage: React.FC = () => {
               FEATURE FILMS & CINEMA
             </h1>
             <p className="text-sm sm:text-base text-[#B5B5B5] mt-2 font-light leading-relaxed">
-              Explore the official feature cinematic releases produced and presented by Kavin Production. Every story sculpted with emotional depth, bold imagery, and uncompromising sound design.
+              Explore the official feature cinematic releases produced and presented by Be Happy Entertainment. Every story sculpted with emotional depth, bold imagery, and uncompromising sound design.
             </p>
           </div>
 

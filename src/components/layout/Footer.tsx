@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
             </Link>
 
             <p className="text-sm text-[#8E8E8E] max-w-sm leading-relaxed mt-2">
-              Kavin Production is a cinematic entertainment platform and creative film house dedicated to original visual narratives, feature films, short cinema, and electrifying live concerts.
+              Be Happy Entertainment is a cinematic entertainment platform and creative film house dedicated to original visual narratives, feature films, short cinema, and electrifying live concerts.
             </p>
 
             <div className="flex items-center gap-2 text-xs text-[#D6AD68] font-cinematic tracking-widest mt-1">
@@ -169,7 +169,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7E7E7E]">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
-            <span>© {new Date().getFullYear()} KAVIN PRODUCTION. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} BE HAPPY ENTERTAINMENT. All rights reserved.</span>
             <span className="hidden sm:inline text-white/20">|</span>
             <span className="text-[#D6AD68]">DREAM. CREATE. ENTERTAIN.</span>
           </div>

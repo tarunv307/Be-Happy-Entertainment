@@ -28,7 +28,7 @@ export const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
 
   const handleQuickFill = () => {
-    setEmail('admin@kavinproduction.com');
+    setEmail('admin@behappyentertainment.com');
     setPassword('kavin@2025');
     setError(null);
   };
@@ -140,7 +140,7 @@ export const AdminLogin: React.FC = () => {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@kavinproduction.com"
+                  placeholder="admin@behappyentertainment.com"
                   className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm pl-10 pr-3.5 py-3 text-base sm:text-sm text-white placeholder-[#666] focus:outline-hidden transition-colors"
                 />
               </div>
@@ -238,7 +238,7 @@ export const AdminLogin: React.FC = () => {
                     One-Tap Studio Credentials
                   </span>
                   <span className="text-[10px] text-[#7E7E7E] font-mono">
-                    admin@kavinproduction.com
+                    admin@behappyentertainment.com
                   </span>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export const AdminLogin: React.FC = () => {
 
         {/* Footer Notice */}
         <p className="text-center text-[11px] text-[#666] mt-6 font-light">
-          &copy; {new Date().getFullYear()} Kavin Production &bull; Be Happy Entertainment. All rights reserved.
+          &copy; {new Date().getFullYear()} Be Happy Entertainment. All rights reserved.
         </p>
       </div>
     </div>

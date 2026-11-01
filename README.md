@@ -1,9 +1,9 @@
-# KAVIN PRODUCTION — Premium Cinematic OTT Platform
+# BE HAPPY ENTERTAINMENT — Premium Cinematic OTT Platform
 
 > **“DREAM. CREATE. ENTERTAIN.”**
 > *Movies | Short Films | Concerts — “Every Frame Tells a Story.”*
 
-Official cinematic entertainment streaming platform and production showcase for **KAVIN PRODUCTION** (in collaboration with **Be Happy Entertainment**). Inspired by premier streaming interfaces like Netflix and Prime Video, sculpted with bespoke gold-and-obsidian cinematic branding, real original video streaming, verified production credits, and responsive design.
+Official cinematic entertainment streaming platform and production showcase for **BE HAPPY ENTERTAINMENT**. Inspired by premier streaming interfaces like Netflix and Prime Video, sculpted with bespoke gold-and-obsidian cinematic branding, real original video streaming, verified production credits, and responsive design.
 
 ---
 
@@ -20,7 +20,7 @@ All content across the platform is verified from client assets. No mock movies, 
    * *Classification*: Feature Film
    * *Status*: Released (2025)
    * *Producer*: Kavin
-   * *Production Banner*: Kavin Production / Be Happy Entertainment
+   * *Production Banner*: Be Happy Entertainment
    * *Video Stream*: Full video playback (`/media/padikathavan.mp4`)
    * *Official Poster*: `/media/padikathavan-poster.webp`
 
@@ -28,7 +28,7 @@ All content across the platform is verified from client assets. No mock movies, 
    * *Classification*: Feature Film
    * *Status*: Released (2025)
    * *Producer*: Kavin
-   * *Production Banner*: Kavin Production / Be Happy Entertainment
+   * *Production Banner*: Be Happy Entertainment
    * *Video Stream*: Full video playback (`/media/game-not-over.mp4`)
    * *Official Poster*: `/media/game-poster.webp`
 
@@ -132,7 +132,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### 4. Admin CMS Access
 * **URL**: `/admin` (or click **CMS** in navigation/footer)
-* **Demo Passkey**: `admin@kavinproduction.com` / `kavin@2025`
+* **Demo Passkey**: `admin@behappyentertainment.com` / `kavin@2025`
 
 ### 5. Production Build
 ```bash

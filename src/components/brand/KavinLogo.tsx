@@ -87,39 +87,45 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
         <rect x="84" y="70" width="6" height="8" rx="1.5" fill="url(#kpGold)" opacity="0.8" />
         <rect x="84" y="84" width="6" height="8" rx="1.5" fill="url(#kpGold)" opacity="0.8" />
 
-        {/* Central Vertical Pillar of the Letter 'K' */}
+        {/* Sculpted 'B' & 'H' Cinematic Monogram with Play Button Core */}
+        {/* Vertical Spine of 'B' */}
         <path
-          d="M26 18H34V82H26V18Z"
+          d="M24 20H32V80H24V20Z"
           fill="url(#kpGold)"
         />
 
-        {/* Diagonal Arms of 'K' Intertwined */}
+        {/* Upper Loop of 'B' */}
         <path
-          d="M33 52L49 24H59L41 55L60 82H50L33 58"
-          fill="url(#kpGold)"
-        />
-
-        {/* Stylized 'P' Loop morphed into a Radiant Forward Play-Button Triangle */}
-        {/* Upper horizontal connecting bar */}
-        <path
-          d="M34 22H55C66 22 75 30 75 42C75 54 66 62 55 62H42"
+          d="M32 23H48C56 23 62 28 62 36C62 44 56 49 48 49H32"
           stroke="url(#kpGold)"
-          strokeWidth="6"
+          strokeWidth="5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.35"
+          fill="none"
+          opacity="0.9"
         />
 
-        {/* The Golden Play Button Core - Nestled inside the P loop */}
+        {/* Lower Loop of 'B' */}
         <path
-          d="M48 30L68 44L48 58Z"
+          d="M32 49H50C59 49 65 54 65 64C65 74 58 79 49 79H32"
+          stroke="url(#kpGold)"
+          strokeWidth="5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          opacity="0.9"
+        />
+
+        {/* The Golden Play Button Core - Nestled inside the emblem */}
+        <path
+          d="M45 36L65 49L45 62Z"
           fill="url(#kpGold)"
           filter="url(#kpGlow)"
           className={animated ? 'animate-pulse' : ''}
         />
 
         {/* Subtle Cinematic Lens Flare Sparkle */}
-        <circle cx="68" cy="44" r="2" fill="#FFFFFF" />
+        <circle cx="65" cy="49" r="2.5" fill="#FFFFFF" />
       </svg>
     </div>
   );
@@ -137,11 +143,11 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
       <div className={`inline-flex items-center gap-3 ${className}`}>
         {Monogram}
         <div className="flex flex-col">
-          <span className={`font-cinematic font-bold tracking-[0.25em] text-white uppercase leading-none ${currentSize.textScale}`}>
-            KAVIN
+          <span className={`font-cinematic font-bold tracking-[0.22em] text-white uppercase leading-none ${currentSize.textScale}`}>
+            BE HAPPY
           </span>
-          <span className="text-[8px] tracking-[0.3em] text-[#D6AD68] font-semibold uppercase mt-0.5">
-            PRODUCTION
+          <span className="text-[8px] tracking-[0.28em] text-[#D6AD68] font-semibold uppercase mt-0.5">
+            ENTERTAINMENT
           </span>
         </div>
       </div>
@@ -154,10 +160,10 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
         <div className="inline-flex items-center gap-3">
           {Monogram}
           <div className="flex flex-col">
-            <span className="font-cinematic font-extrabold tracking-[0.28em] text-white text-2xl uppercase leading-none">
-              KAVIN PRODUCTION
+            <span className="font-cinematic font-extrabold tracking-[0.22em] text-white text-xl sm:text-2xl uppercase leading-none">
+              BE HAPPY ENTERTAINMENT
             </span>
-            <span className="text-[10px] tracking-[0.35em] text-[#D6AD68] font-semibold uppercase mt-1">
+            <span className="text-[10px] tracking-[0.3em] text-[#D6AD68] font-semibold uppercase mt-1">
               CINEMATIC OTT PLATFORM
             </span>
           </div>
@@ -180,16 +186,16 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
     <div className={`inline-flex items-center gap-3 group select-none ${className}`}>
       {Monogram}
       <div className="flex flex-col justify-center">
-        <div className="flex items-center gap-1.5">
-          <span className={`font-cinematic font-extrabold text-white tracking-[0.22em] uppercase leading-none transition-colors group-hover:text-[#F3E2B8] ${currentSize.textScale}`}>
-            KAVIN
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className={`font-cinematic font-extrabold text-white tracking-[0.2em] uppercase leading-none transition-colors group-hover:text-[#F3E2B8] ${currentSize.textScale}`}>
+            BE HAPPY
           </span>
-          <span className={`font-cinematic font-light text-[#D6AD68] tracking-[0.22em] uppercase leading-none ${currentSize.textScale}`}>
-            PRODUCTION
+          <span className={`font-cinematic font-light text-[#D6AD68] tracking-[0.2em] uppercase leading-none ${currentSize.textScale}`}>
+            ENTERTAINMENT
           </span>
         </div>
         {showTagline && (
-          <span className={`${currentSize.subText} uppercase tracking-[0.32em] text-[#B5B5B5] font-medium mt-1 transition-colors group-hover:text-[#D6AD68]`}>
+          <span className={`${currentSize.subText} uppercase tracking-[0.28em] text-[#B5B5B5] font-medium mt-1 transition-colors group-hover:text-[#D6AD68]`}>
             DREAM. CREATE. ENTERTAIN.
           </span>
         )}
@@ -197,3 +203,5 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
     </div>
   );
 };
+
+export const BeHappyLogo = KavinLogo;

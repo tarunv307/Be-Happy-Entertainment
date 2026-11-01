@@ -104,7 +104,7 @@ export const ContactPage: React.FC = () => {
             INITIATE PRODUCTION
           </span>
           <h1 className="font-cinematic font-black text-3xl sm:text-5xl text-white tracking-wide uppercase">
-            CONNECT WITH KAVIN PRODUCTION
+            CONNECT WITH BE HAPPY ENTERTAINMENT
           </h1>
           <p className="text-sm sm:text-base text-[#B5B5B5] font-light mt-3 leading-relaxed">
             Whether inquiring about theatrical distribution, short film festival collaborations, or live concert and DJ sound engineering, our production office is ready to evaluate your vision.
@@ -148,7 +148,7 @@ export const ContactPage: React.FC = () => {
                       Production Banners
                     </h4>
                     <p className="text-[#8E8E8E] font-light mt-1">
-                      Kavin Production &bull; Be Happy Entertainment
+                      Be Happy Entertainment
                     </p>
                     <p className="text-xs text-[#D6AD68] font-mono mt-0.5">
                       “Every Frame Tells a Story”

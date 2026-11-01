@@ -237,7 +237,7 @@ export const ConcertsPage: React.FC = () => {
               Planning a Concert, Stage Show, or Festival?
             </h3>
             <p className="text-xs sm:text-sm text-[#B5B5B5] mt-1 max-w-xl font-light">
-              Collaborate directly with Kavin Production for live sound engineering, Pioneer DJ bookings, and stage acoustic consultation.
+              Collaborate directly with Be Happy Entertainment for live sound engineering, Pioneer DJ bookings, and stage acoustic consultation.
             </p>
           </div>
 

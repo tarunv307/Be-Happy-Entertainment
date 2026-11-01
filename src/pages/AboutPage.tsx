@@ -48,7 +48,7 @@ export const AboutPage: React.FC = () => {
             </p>
 
             <p className="text-sm sm:text-base text-[#B5B5B5] leading-relaxed max-w-2xl font-light">
-              Kavin Production (collaborating with Be Happy Entertainment) is a creative entertainment house where cinema and sound converge. From evocative feature films and short cinema to electrifying live concerts, we craft experiences that linger in minds and hearts.
+              Be Happy Entertainment is a creative entertainment house where cinema and sound converge. From evocative feature films and short cinema to electrifying live concerts, we craft experiences that linger in minds and hearts.
             </p>
           </div>
         </div>
@@ -100,7 +100,7 @@ export const AboutPage: React.FC = () => {
                 The Filmmaking Routine
               </h4>
               <p className="font-light">
-                “Shoot. Edit. Mix. Create. Repeat.” From writing and directing titles like Mudhal Kadhal, Padikathavan, and Game to engineering live festival sound rigs, Kavin Production is rooted in relentless hands-on creative execution.
+                “Shoot. Edit. Mix. Create. Repeat.” From writing and directing titles like Mudhal Kadhal, Padikathavan, and Game to engineering live festival sound rigs, Be Happy Entertainment is rooted in relentless hands-on creative execution.
               </p>
             </div>
           </div>
@@ -184,7 +184,7 @@ export const AboutPage: React.FC = () => {
               OFFICIAL CHANNELS
             </span>
             <h3 className="font-cinematic font-black text-2xl sm:text-3xl text-white mt-1">
-              Connect With Kavin Production
+              Connect With Be Happy Entertainment
             </h3>
             <p className="text-xs sm:text-sm text-[#B5B5B5] mt-1 font-light">
               Follow our official media profiles on YouTube (@kavin_kp) and Instagram (@be_happy_entertainment24).

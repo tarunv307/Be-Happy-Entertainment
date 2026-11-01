@@ -23,7 +23,7 @@ export const SocialShowcaseSections: React.FC<SocialShowcaseSectionsProps> = ({ 
       category: 'Movie Stream',
       videoUrl: '/media/padikathavan.mp4',
       thumbnail: '/media/padikathavan-poster.webp',
-      tagline: 'Campus emotional drama produced under Kavin Production.',
+      tagline: 'Campus emotional drama produced under Be Happy Entertainment.',
     },
     {
       id: 'yt-3',

@@ -74,7 +74,7 @@ export const InfiniteImageMarquee: React.FC<InfiniteImageMarqueeProps> = ({
                 {item.title}
               </h4>
               <p className="text-[11px] uppercase tracking-widest text-[#B69A65] mt-1 font-medium">
-                Kavin Production Studio
+                Be Happy Entertainment Studio
               </p>
             </div>
             

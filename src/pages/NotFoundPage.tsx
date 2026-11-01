@@ -20,7 +20,7 @@ export const NotFoundPage: React.FC = () => {
         </h1>
 
         <p className="text-xs sm:text-sm text-[#B5B5B5] font-light leading-relaxed">
-          The requested reel or title is not currently available in the Kavin Production streaming theater.
+          The requested reel or title is not currently available in the Be Happy Entertainment streaming theater.
         </p>
 
         <div className="pt-4">

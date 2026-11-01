@@ -12,7 +12,7 @@ export const IntroSplash: React.FC<IntroSplashProps> = ({ onComplete, forceShow 
 
   useEffect(() => {
     // Check if already viewed in this session unless forceShow is true
-    const hasSeenIntro = sessionStorage.getItem('kavin_intro_seen');
+    const hasSeenIntro = sessionStorage.getItem('behappy_intro_seen');
     if (hasSeenIntro && !forceShow) {
       if (onComplete) onComplete();
       return;
@@ -31,7 +31,7 @@ export const IntroSplash: React.FC<IntroSplashProps> = ({ onComplete, forceShow 
     const timer4 = setTimeout(() => setStage('tagline'), 2500);
     const timer5 = setTimeout(() => {
       setStage('done');
-      sessionStorage.setItem('kavin_intro_seen', 'true');
+      sessionStorage.setItem('behappy_intro_seen', 'true');
       setTimeout(() => {
         setVisible(false);
         if (onComplete) onComplete();
@@ -93,7 +93,7 @@ export const IntroSplash: React.FC<IntroSplashProps> = ({ onComplete, forceShow 
   };
 
   const handleSkip = () => {
-    sessionStorage.setItem('kavin_intro_seen', 'true');
+    sessionStorage.setItem('behappy_intro_seen', 'true');
     setVisible(false);
     if (onComplete) onComplete();
   };
@@ -181,27 +181,36 @@ export const IntroSplash: React.FC<IntroSplashProps> = ({ onComplete, forceShow 
                 <rect x="84" y="70" width="6" height="8" rx="1.5" fill="url(#introGold)" />
                 <rect x="84" y="84" width="6" height="8" rx="1.5" fill="url(#introGold)" />
 
-                {/* KP Monogram */}
-                <path d="M26 18H34V82H26V18Z" fill="url(#introGold)" />
-                <path d="M33 52L49 24H59L41 55L60 82H50L33 58" fill="url(#introGold)" />
+                {/* BH Monogram */}
+                <path d="M24 20H32V80H24V20Z" fill="url(#introGold)" />
                 <path
-                  d="M34 22H55C66 22 75 30 75 42C75 54 66 62 55 62H42"
+                  d="M32 23H48C56 23 62 28 62 36C62 44 56 49 48 49H32"
                   stroke="url(#introGold)"
-                  strokeWidth="6"
+                  strokeWidth="5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  opacity="0.4"
+                  fill="none"
+                  opacity="0.9"
+                />
+                <path
+                  d="M32 49H50C59 49 65 54 65 64C65 74 58 79 49 79H32"
+                  stroke="url(#introGold)"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  opacity="0.9"
                 />
 
                 {/* Radiant Play Button Triangle in Center */}
-                <path d="M48 30L68 44L48 58Z" fill="url(#introGold)" />
-                <circle cx="68" cy="44" r="3" fill="#FFFFFF" />
+                <path d="M45 36L65 49L45 62Z" fill="url(#introGold)" />
+                <circle cx="65" cy="49" r="3" fill="#FFFFFF" />
               </svg>
             </div>
 
             {/* Typography with Cinematic Letter-Spacing Expansion */}
-            <h1 className="font-cinematic text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-[0.3em] uppercase drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
-              KAVIN <span className="text-[#D6AD68]">PRODUCTION</span>
+            <h1 className="font-cinematic text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-[0.25em] uppercase drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
+              BE HAPPY <span className="text-[#D6AD68]">ENTERTAINMENT</span>
             </h1>
 
             {/* Tagline */}

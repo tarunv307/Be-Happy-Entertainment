@@ -23,7 +23,7 @@ export const TeamPage: React.FC = () => {
             THE CREATIVE MINDS
           </h1>
           <p className="text-sm sm:text-base text-[#B5B5B5] font-light mt-3 leading-relaxed">
-            The visionary producer, director, writers, and technical craftspeople collaborating under Kavin Production.
+            The visionary producer, director, writers, and technical craftspeople collaborating under Be Happy Entertainment.
           </p>
         </div>
       </div>

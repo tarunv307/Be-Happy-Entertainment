@@ -1,17 +1,17 @@
 import { Production, ServiceItem, TeamMember, GalleryItem, CompanySettings, Enquiry } from '../types/database';
 
 export const initialCompanySettings: CompanySettings = {
-  brand_name: 'KAVIN PRODUCTION',
+  brand_name: 'BE HAPPY ENTERTAINMENT',
   tagline: 'DREAM. CREATE. ENTERTAIN.',
   producer_name: 'Kavin',
   producer_title: 'Producer, Director & Sound Engineer',
   producer_bio:
-    'Kavin is a multifaceted filmmaker, producer, director, and sound engineer & DJ with a background in Electronics and Communication Engineering. Blending technical engineering discipline with emotive cinematic vision, Kavin leads Kavin Production (associated with Be Happy Entertainment) across feature films, narrative short cinema, and high-energy live concerts and stage entertainment. With a philosophy that every frame must tell a meaningful story, Kavin guides every creative project from concept, writing, and principal photography to acoustic design, sound mixing, and final release.',
+    'Kavin is a multifaceted filmmaker, producer, director, and sound engineer & DJ with a background in Electronics and Communication Engineering. Blending technical engineering discipline with emotive cinematic vision, Kavin leads Be Happy Entertainment across feature films, narrative short cinema, and high-energy live concerts and stage entertainment. With a philosophy that every frame must tell a meaningful story, Kavin guides every creative project from concept, writing, and principal photography to acoustic design, sound mixing, and final release.',
   producer_philosophy:
     'Every Frame Tells a Story. Good Stories, Better People. Same Passion, Different Medium.',
   producer_photo_url: '/media/kavin-director-banner.png',
   company_about:
-    'Kavin Production is a cinematic entertainment platform and production house dedicated to original visual storytelling and live musical experiences. From immersive romantic and dramatic cinema like Mudhal Kadhal, Padikathavan, and Game to premier live concerts and acoustic sound engineering, we dream, create, and entertain with uncompromising artistic devotion.',
+    'Be Happy Entertainment is a cinematic entertainment platform and production house dedicated to original visual storytelling and live musical experiences. From immersive romantic and dramatic cinema like Mudhal Kadhal, Padikathavan, and Game to premier live concerts and acoustic sound engineering, we dream, create, and entertain with uncompromising artistic devotion.',
   mission_statement:
     'To craft impactful cinematic and live entertainment experiences that touch hearts, elevate narratives, and resonate across generations through brave storytelling and acoustic mastery.',
   vision_statement:
@@ -24,9 +24,9 @@ export const initialCompanySettings: CompanySettings = {
   youtube_url: 'https://youtube.com/@kavin_kp',
   facebook_url: '',
   linkedin_url: '',
-  meta_title: 'KAVIN PRODUCTION — DREAM. CREATE. ENTERTAIN. | Official OTT Platform',
+  meta_title: 'BE HAPPY ENTERTAINMENT — DREAM. CREATE. ENTERTAIN. | Official OTT Platform',
   meta_description:
-    'Official cinematic entertainment platform and streaming showcase of Kavin Production. Stream Padikathavan, Game, and upcoming feature Mudhal Kadhal. Discover movies, short films, and live concerts.',
+    'Official cinematic entertainment platform and streaming showcase of Be Happy Entertainment. Stream Padikathavan, Game, and upcoming feature Mudhal Kadhal. Discover movies, short films, and live concerts.',
 };
 
 export const initialProductions: Production[] = [
@@ -41,7 +41,7 @@ export const initialProductions: Production[] = [
     short_description:
       'An evocative romantic narrative exploring the enduring resonance of first love, written and directed by Kavin.',
     description:
-      '“Some stories find you... First love. Lasts forever.” Mudhal Kadhal is an official production under Be Happy Entertainment / Kavin Production. Penned, produced, and directed by Kavin with co-writing by Puviyarasan, this deeply emotional narrative captures the tenderness, vulnerability, and timeless memories that define the journey of young love. Featuring an atmospheric original musical score by Ajay Kumar and evocative cinematography by Yuvan.',
+      '“Some stories find you... First love. Lasts forever.” Mudhal Kadhal is an official production under Be Happy Entertainment. Penned, produced, and directed by Kavin with co-writing by Puviyarasan, this deeply emotional narrative captures the tenderness, vulnerability, and timeless memories that define the journey of young love. Featuring an atmospheric original musical score by Ajay Kumar and evocative cinematography by Yuvan.',
     poster_url: '/media/mudhal-kadhal-poster.png',
     cover_url: '/media/title-3-teaser.png',
     video_url: '/media/mudhal-kadhal.mp4',
@@ -83,9 +83,9 @@ export const initialProductions: Production[] = [
     year: 2025,
     tagline: 'A compelling college youth drama exploring ambition, friendship, and crossroads.',
     short_description:
-      'A grounded campus drama revolving around youth experiences, relationships, and life turning points, produced by Kavin Production.',
+      'A grounded campus drama revolving around youth experiences, relationships, and life turning points, produced by Be Happy Entertainment.',
     description:
-      'Padikathavan captures the unspoken emotional battles, campus dynamics, and life lessons of collegiate life. From quiet moments of reflection to defining relationships that alter life trajectories, this production by Kavin Production delivers an authentic portrayal of contemporary youth resilience. Featuring full video stream playback in the platform theater.',
+      'Padikathavan captures the unspoken emotional battles, campus dynamics, and life lessons of collegiate life. From quiet moments of reflection to defining relationships that alter life trajectories, this production by Be Happy Entertainment delivers an authentic portrayal of contemporary youth resilience. Featuring full video stream playback in the platform theater.',
     poster_url: '/media/padikathavan-poster.webp',
     cover_url: '/media/padikathavan-poster.webp',
     video_url: '/media/padikathavan.mp4',
@@ -93,14 +93,14 @@ export const initialProductions: Production[] = [
     runtime: '1h 48m',
     director: 'Kavin',
     producer: 'Kavin',
-    cinematographer: 'Kavin Production Camera Unit',
-    editor: 'Kavin Production Post',
-    cast_and_crew: 'Official Kavin Production cast lineup.',
+    cinematographer: 'Be Happy Entertainment Camera Unit',
+    editor: 'Be Happy Entertainment Post',
+    cast_and_crew: 'Official Be Happy Entertainment cast lineup.',
     credits: [
       { role: 'Producer', name: 'Kavin' },
-      { role: 'Production House', name: 'Kavin Production' },
+      { role: 'Production House', name: 'Be Happy Entertainment' },
       { role: 'Banner', name: 'Be Happy Entertainment' },
-      { role: 'Official Video Release', name: 'Kavin Production Platform' },
+      { role: 'Official Video Release', name: 'Be Happy Entertainment Platform' },
     ],
     gallery_images: [
       '/media/padikathavan-poster.webp',
@@ -124,7 +124,7 @@ export const initialProductions: Production[] = [
     short_description:
       'A suspenseful drama chronicling high-stakes confrontations, digital dilemmas, and unexpected turning points.',
     description:
-      '“Life is a journey. Enjoy the ride.” Game (Not Over) dives into modern conflicts, confrontation, and resilience. Produced and crafted under Kavin Production, the film weaves intense interpersonal friction with thought-provoking turning points where every move counts. Stream the complete film directly on the official platform.',
+      '“Life is a journey. Enjoy the ride.” Game (Not Over) dives into modern conflicts, confrontation, and resilience. Produced and crafted under Be Happy Entertainment, the film weaves intense interpersonal friction with thought-provoking turning points where every move counts. Stream the complete film directly on the official platform.',
     poster_url: '/media/game-poster.webp',
     cover_url: '/media/game-poster.webp',
     video_url: '/media/game-not-over.mp4',
@@ -132,14 +132,14 @@ export const initialProductions: Production[] = [
     runtime: '1h 35m',
     director: 'Kavin',
     producer: 'Kavin',
-    cinematographer: 'Kavin Production Camera Unit',
-    editor: 'Kavin Production Post',
-    cast_and_crew: 'Official Kavin Production cast lineup.',
+    cinematographer: 'Be Happy Entertainment Camera Unit',
+    editor: 'Be Happy Entertainment Post',
+    cast_and_crew: 'Official Be Happy Entertainment cast lineup.',
     credits: [
       { role: 'Producer', name: 'Kavin' },
-      { role: 'Production House', name: 'Kavin Production' },
+      { role: 'Production House', name: 'Be Happy Entertainment' },
       { role: 'Banner', name: 'Be Happy Entertainment' },
-      { role: 'Official Video Release', name: 'Kavin Production Platform' },
+      { role: 'Official Video Release', name: 'Be Happy Entertainment Platform' },
     ],
     gallery_images: [
       '/media/game-poster.webp',
@@ -253,7 +253,7 @@ export const initialTeamMembers: TeamMember[] = [
     role_category: 'Executive',
     photo_url: '/media/kavin-director-banner.png',
     biography:
-      'Kavin is the visionary force behind Kavin Production and Be Happy Entertainment. Holding an engineering background in Electronics and Communication Engineering (ECE), he uniquely integrates technical sound precision and technological acumen with intuitive narrative direction. As Producer and Director of Padikathavan, Game, and Mudhal Kadhal, as well as an accomplished DJ and Sound Engineer, Kavin oversees every project with the motto: "Good Stories, Better People. Same Passion, Different Medium. Shoot, Edit, Mix, Create, Repeat."',
+      'Kavin is the visionary force behind Be Happy Entertainment. Holding an engineering background in Electronics and Communication Engineering (ECE), he uniquely integrates technical sound precision and technological acumen with intuitive narrative direction. As Producer and Director of Padikathavan, Game, and Mudhal Kadhal, as well as an accomplished DJ and Sound Engineer, Kavin oversees every project with the motto: "Good Stories, Better People. Same Passion, Different Medium. Shoot, Edit, Mix, Create, Repeat."',
     creative_philosophy: 'Every Frame Tells a Story. Ideas. Stories. Sound. Beyond.',
     is_producer: true,
     social_links: {
@@ -310,7 +310,7 @@ export const initialGallery: GalleryItem[] = [
   {
     id: 'gal-5',
     title: 'Padikathavan — Official Poster',
-    caption: 'Official movie poster for Padikathavan, produced by Kavin Production.',
+    caption: 'Official movie poster for Padikathavan, produced by Be Happy Entertainment.',
     category: 'Film Production',
     image_url: '/media/padikathavan-poster.webp',
     aspect_ratio: 'portrait',
@@ -320,7 +320,7 @@ export const initialGallery: GalleryItem[] = [
   {
     id: 'gal-6',
     title: 'Game (Not Over) — Official Poster',
-    caption: 'Official movie poster for Game (Not Over), produced by Kavin Production.',
+    caption: 'Official movie poster for Game (Not Over), produced by Be Happy Entertainment.',
     category: 'Film Production',
     image_url: '/media/game-poster.webp',
     aspect_ratio: 'portrait',

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin
 
-Sitemap: https://kavinproduction.com/sitemap.xml
+Sitemap: https://behappyentertainment.com/sitemap.xml
