@@ -140,13 +140,13 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
 
   if (variant === 'compact') {
     return (
-      <div className={`inline-flex items-center gap-3 ${className}`}>
+      <div className={`inline-flex items-center gap-2.5 sm:gap-3 ${className}`}>
         {Monogram}
-        <div className="flex flex-col">
-          <span className={`font-cinematic font-bold tracking-[0.22em] text-white uppercase leading-none ${currentSize.textScale}`}>
+        <div className="flex flex-col justify-center leading-none">
+          <span className={`font-cinematic font-bold tracking-[0.2em] text-white uppercase leading-none ${currentSize.textScale}`}>
             BE HAPPY
           </span>
-          <span className="text-[8px] tracking-[0.28em] text-[#D6AD68] font-semibold uppercase mt-0.5">
+          <span className="text-[8px] sm:text-[9px] tracking-[0.28em] text-[#D6AD68] font-semibold uppercase mt-0.5 leading-none">
             ENTERTAINMENT
           </span>
         </div>
@@ -159,11 +159,11 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
       <div className={`flex flex-col items-start gap-3 ${className}`}>
         <div className="inline-flex items-center gap-3">
           {Monogram}
-          <div className="flex flex-col">
-            <span className="font-cinematic font-extrabold tracking-[0.22em] text-white text-xl sm:text-2xl uppercase leading-none">
+          <div className="flex flex-col justify-center">
+            <span className="font-cinematic font-extrabold tracking-[0.2em] text-white text-xl sm:text-2xl uppercase leading-none">
               BE HAPPY ENTERTAINMENT
             </span>
-            <span className="text-[10px] tracking-[0.3em] text-[#D6AD68] font-semibold uppercase mt-1">
+            <span className="text-[10px] tracking-[0.3em] text-[#D6AD68] font-semibold uppercase mt-1 leading-none">
               CINEMATIC OTT PLATFORM
             </span>
           </div>
@@ -181,21 +181,32 @@ export const KavinLogo: React.FC<KavinLogoProps> = ({
     );
   }
 
-  // Full default variant
+  // Full default variant - responsive so on mobile it stacks compactly and on desktop stays single-line
   return (
-    <div className={`inline-flex items-center gap-3 group select-none ${className}`}>
+    <div className={`inline-flex items-center gap-2.5 sm:gap-3 group select-none shrink-0 ${className}`}>
       {Monogram}
       <div className="flex flex-col justify-center">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className={`font-cinematic font-extrabold text-white tracking-[0.2em] uppercase leading-none transition-colors group-hover:text-[#F3E2B8] ${currentSize.textScale}`}>
+        {/* Mobile view (< sm): clean stacked typography so it never pushes or wraps awkwardly */}
+        <div className="flex sm:hidden flex-col justify-center leading-none">
+          <span className="font-cinematic font-extrabold text-white tracking-[0.18em] text-[13px] uppercase leading-tight">
             BE HAPPY
           </span>
-          <span className={`font-cinematic font-light text-[#D6AD68] tracking-[0.2em] uppercase leading-none ${currentSize.textScale}`}>
+          <span className="text-[8px] tracking-[0.22em] text-[#D6AD68] font-bold uppercase mt-0.5 leading-tight">
+            ENTERTAINMENT
+          </span>
+        </div>
+
+        {/* Tablet & Desktop view (>= sm): horizontal luxury presentation */}
+        <div className="hidden sm:flex items-center gap-1.5 flex-nowrap whitespace-nowrap">
+          <span className={`font-cinematic font-extrabold text-white tracking-[0.18em] uppercase leading-none transition-colors group-hover:text-[#F3E2B8] ${currentSize.textScale}`}>
+            BE HAPPY
+          </span>
+          <span className={`font-cinematic font-light text-[#D6AD68] tracking-[0.18em] uppercase leading-none ${currentSize.textScale}`}>
             ENTERTAINMENT
           </span>
         </div>
         {showTagline && (
-          <span className={`${currentSize.subText} uppercase tracking-[0.28em] text-[#B5B5B5] font-medium mt-1 transition-colors group-hover:text-[#D6AD68]`}>
+          <span className={`${currentSize.subText} uppercase tracking-[0.25em] text-[#B5B5B5] font-medium mt-1 transition-colors group-hover:text-[#D6AD68] hidden md:block whitespace-nowrap`}>
             DREAM. CREATE. ENTERTAIN.
           </span>
         )}

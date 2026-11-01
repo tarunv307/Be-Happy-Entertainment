@@ -42,27 +42,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
           isScrolled
-            ? 'bg-[#080808]/95 backdrop-blur-xl border-b border-[#D6AD68]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)] py-3'
-            : 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 sm:py-5 border-b border-transparent'
+            ? 'bg-[#080808]/95 backdrop-blur-xl border-b border-[#D6AD68]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)] py-2.5 sm:py-3'
+            : 'bg-gradient-to-b from-black/95 via-black/50 to-transparent py-3.5 sm:py-4.5 border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 sm:gap-4 lg:gap-6 min-h-[44px] sm:min-h-[48px]">
           {/* Brand Logo (Left) */}
           <Link to="/" className="flex items-center gap-2 group shrink-0">
             <KavinLogo variant="full" size="md" animated={true} />
           </Link>
 
           {/* Desktop Navigation Links (Center) */}
-          <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
+          <nav className="hidden lg:flex items-center justify-center gap-4 xl:gap-6 2xl:gap-8">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-xs xl:text-[13px] tracking-[0.16em] uppercase font-medium transition-all duration-200 relative py-1.5 ${
+                  className={`text-[11.5px] xl:text-[13px] tracking-[0.14em] uppercase font-medium transition-all duration-200 relative py-2 whitespace-nowrap group ${
                     isActive
                       ? 'text-[#D6AD68] font-bold drop-shadow-[0_0_8px_rgba(214,173,104,0.5)]'
                       : 'text-[#B5B5B5] hover:text-white'
@@ -81,17 +81,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
           </nav>
 
           {/* Actions & Social Links (Right) */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-4 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             {/* Search Trigger */}
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1.5"
+              className="w-9 h-9 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-all cursor-pointer flex items-center justify-center"
               title="Search platform (Cmd+K)"
             >
               <Search className="w-4 h-4" />
-              <span className="text-[11px] uppercase tracking-wider text-[#7E7E7E] hidden xl:inline">
-                Search
-              </span>
             </button>
 
             {/* Official Instagram */}
@@ -99,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
               href="https://www.instagram.com/be_happy_entertainment24/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors"
+              className="w-9 h-9 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 flex items-center justify-center transition-colors"
               title="Official Instagram"
             >
               <InstagramIcon className="w-4 h-4" />
@@ -110,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
               href="https://youtube.com/@kavin_kp"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full text-[#B5B5B5] hover:text-red-500 hover:bg-white/5 transition-colors"
+              className="w-9 h-9 rounded-full text-[#B5B5B5] hover:text-red-500 hover:bg-white/5 flex items-center justify-center transition-colors"
               title="Official YouTube Channel"
             >
               <YoutubeIcon className="w-4 h-4" />
@@ -120,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
             {onReplayIntro && (
               <button
                 onClick={onReplayIntro}
-                className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer"
                 title="Replay Cinematic Intro"
               >
                 <Sparkles className="w-4 h-4" />
@@ -130,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
             {/* Profile Icon */}
             <Link
               to="/admin"
-              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-center border border-white/10 hover:border-[#D6AD68]/40"
+              className="w-9 h-9 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-center border border-white/10 hover:border-[#D6AD68]/40"
               title="Profile / CMS Sign In"
             >
               <User className="w-4 h-4" />
@@ -148,10 +145,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
           </div>
 
           {/* Mobile Right Controls */}
-          <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
+          <div className="lg:hidden flex items-center gap-1 sm:gap-2 shrink-0">
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2.5 text-[#B5B5B5] hover:text-[#D6AD68] active:scale-90 transition-transform cursor-pointer"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 active:scale-90 transition-all cursor-pointer"
               title="Search"
             >
               <Search className="w-5 h-5" />
@@ -159,7 +156,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
 
             <Link
               to="/admin"
-              className="p-2.5 text-[#B5B5B5] hover:text-[#D6AD68] active:scale-90 transition-transform"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 active:scale-90 transition-all"
               title="Profile / CMS"
             >
               <User className="w-5 h-5" />
@@ -167,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 text-[#D6AD68] hover:text-white active:scale-90 transition-transform cursor-pointer"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-[#D6AD68] hover:text-white hover:bg-white/5 active:scale-90 transition-all cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
