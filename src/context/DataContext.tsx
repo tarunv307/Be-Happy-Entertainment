@@ -71,36 +71,52 @@ const LOCAL_STORAGE_KEYS = {
   SETTINGS: 'behappy_ott_v1_settings',
 };
 
+const LEGACY_STORAGE_KEYS = {
+  PRODUCTIONS: 'kavin_ott_v3_productions',
+  SERVICES: 'kavin_ott_v3_services',
+  TEAM: 'kavin_ott_v3_team',
+  GALLERY: 'kavin_ott_v3_gallery',
+  ENQUIRIES: 'kavin_ott_v3_enquiries',
+  SETTINGS: 'kavin_ott_v3_settings',
+};
+
+// Safe helper to preserve existing user database & company settings
+const loadStoredData = <T,>(primaryKey: string, legacyKey: string, fallback: T): T => {
+  try {
+    const primary = localStorage.getItem(primaryKey);
+    if (primary) return JSON.parse(primary);
+    const legacy = localStorage.getItem(legacyKey);
+    if (legacy) return JSON.parse(legacy);
+  } catch (err) {
+    console.warn(`Could not read storage for ${primaryKey}:`, err);
+  }
+  return fallback;
+};
+
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [productions, setProductions] = useState<Production[]>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.PRODUCTIONS);
-    return saved ? JSON.parse(saved) : initialProductions;
-  });
+  const [productions, setProductions] = useState<Production[]>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.PRODUCTIONS, LEGACY_STORAGE_KEYS.PRODUCTIONS, initialProductions)
+  );
 
-  const [services, setServices] = useState<ServiceItem[]>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.SERVICES);
-    return saved ? JSON.parse(saved) : initialServices;
-  });
+  const [services, setServices] = useState<ServiceItem[]>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.SERVICES, LEGACY_STORAGE_KEYS.SERVICES, initialServices)
+  );
 
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.TEAM);
-    return saved ? JSON.parse(saved) : initialTeamMembers;
-  });
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.TEAM, LEGACY_STORAGE_KEYS.TEAM, initialTeamMembers)
+  );
 
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.GALLERY);
-    return saved ? JSON.parse(saved) : initialGallery;
-  });
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.GALLERY, LEGACY_STORAGE_KEYS.GALLERY, initialGallery)
+  );
 
-  const [enquiries, setEnquiries] = useState<Enquiry[]>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.ENQUIRIES);
-    return saved ? JSON.parse(saved) : initialEnquiries;
-  });
+  const [enquiries, setEnquiries] = useState<Enquiry[]>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.ENQUIRIES, LEGACY_STORAGE_KEYS.ENQUIRIES, initialEnquiries)
+  );
 
-  const [companySettings, setCompanySettings] = useState<CompanySettings>(() => {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.SETTINGS);
-    return saved ? JSON.parse(saved) : initialCompanySettings;
-  });
+  const [companySettings, setCompanySettings] = useState<CompanySettings>(() =>
+    loadStoredData(LOCAL_STORAGE_KEYS.SETTINGS, LEGACY_STORAGE_KEYS.SETTINGS, initialCompanySettings)
+  );
 
   const [isLoading, setIsLoading] = useState(false);
 
