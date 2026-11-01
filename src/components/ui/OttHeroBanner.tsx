@@ -130,11 +130,11 @@ export const OttHeroBanner: React.FC<OttHeroBannerProps> = ({ productions, onPla
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 sm:pb-24">
-        <div className="max-w-2xl sm:max-w-3xl flex flex-col items-start gap-3 sm:gap-5">
+      <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-24 sm:pb-28 lg:pb-24">
+        <div className="max-w-2xl sm:max-w-3xl flex flex-col items-start gap-3 sm:gap-4.5">
           {/* Animated Be Happy Entertainment Monogram & Badge Row */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 animate-fade-in">
-            <div className="bg-black/70 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#D6AD68]/40 shadow-[0_0_20px_rgba(214,173,104,0.3)]">
+            <div className="bg-black/80 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#D6AD68]/40 shadow-[0_0_20px_rgba(214,173,104,0.3)]">
               <KavinLogo variant="compact" size="sm" animated={true} showTagline={false} />
             </div>
 
@@ -143,114 +143,159 @@ export const OttHeroBanner: React.FC<OttHeroBannerProps> = ({ productions, onPla
             </span>
 
             {current.status === 'In Production' && (
-              <span className="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xs text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white backdrop-blur-md border border-white/10">
+              <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xs text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white backdrop-blur-md border border-white/15">
                 Coming 2026
               </span>
             )}
+
+            {/* Mobile Slide Counter Indicator */}
+            <span className="sm:hidden ml-auto text-[10px] font-mono tracking-wider text-[#D6AD68] bg-black/60 px-2 py-0.5 rounded-full border border-white/10">
+              {currentIndex + 1} / {featuredList.length}
+            </span>
           </div>
 
-          {/* Featured Title */}
-          <h1 className="font-cinematic font-black text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-wide uppercase drop-shadow-[0_4px_25px_rgba(0,0,0,0.9)] leading-tight">
-            {current.title}
+          {/* Featured Title with Luxury Cinematic Gradient */}
+          <h1 className="font-cinematic font-black text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-wide uppercase drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] leading-[1.08]">
+            <span className="text-gradient-gold-bright">{current.title}</span>
           </h1>
 
           {/* Metadata Row */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-[#B5B5B5] font-medium">
-            <span className="flex items-center gap-1 text-[#D6AD68]">
+            <span className="flex items-center gap-1 text-[#D6AD68] font-bold">
               <Calendar className="w-3.5 h-3.5" />
               {current.year}
             </span>
             {current.runtime && (
-              <span className="flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5" />
-                {current.runtime}
-              </span>
+              <>
+                <span className="text-white/30">•</span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-[#D6AD68]" />
+                  {current.runtime}
+                </span>
+              </>
             )}
-            <span className="text-white/40">•</span>
-            <span className="truncate max-w-[200px] sm:max-w-none">
-              Directed by <strong className="text-white">{current.director}</strong>
+            <span className="text-white/30">•</span>
+            <span className="truncate max-w-[220px] sm:max-w-none text-white/90">
+              Directed by <strong className="text-white font-bold">{current.director}</strong>
             </span>
           </div>
 
-          {/* Synopsis */}
-          <p className="text-xs sm:text-base md:text-lg text-[#C5C5C5] line-clamp-2 sm:line-clamp-3 leading-relaxed drop-shadow-md max-w-2xl font-light">
-            {current.tagline ? `“${current.tagline}” ` : ''}
-            {current.description || current.short_description}
-          </p>
-
-          {/* Action CTAs: Responsive Mobile Touch Flow */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 pt-1 sm:pt-2 w-full sm:w-auto">
-            {current.video_url && (
-              <button
-                onClick={() => onPlayVideo(current.video_url!, `${current.title} — Official Trailer / Stream`)}
-                className="btn-gold flex-1 sm:flex-initial px-5 sm:px-8 py-3 sm:py-3.5 rounded-sm flex items-center justify-center gap-2 sm:gap-2.5 text-xs sm:text-sm uppercase font-extrabold cursor-pointer active:scale-95 transition-transform"
-              >
-                <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-black shrink-0" />
-                <span className="whitespace-nowrap">Watch Trailer</span>
-              </button>
+          {/* Tagline & Synopsis */}
+          <div className="max-w-2xl">
+            {current.tagline && (
+              <p className="text-xs sm:text-sm text-[#D6AD68] font-cinematic italic tracking-wider mb-1 line-clamp-1">
+                “{current.tagline}”
+              </p>
             )}
+            <p className="text-xs sm:text-base text-[#D0D0D0] line-clamp-2 sm:line-clamp-3 leading-relaxed drop-shadow-md font-light">
+              {current.description || current.short_description}
+            </p>
+          </div>
 
-            <Link
-              to="/movies"
-              className="flex-1 sm:flex-initial px-4 sm:px-7 py-3 sm:py-3.5 rounded-sm bg-[#D6AD68]/20 hover:bg-[#D6AD68] hover:text-black text-[#D6AD68] backdrop-blur-md border border-[#D6AD68]/40 text-xs sm:text-sm uppercase tracking-wider font-extrabold flex items-center justify-center gap-2 transition-all active:scale-95"
-            >
-              <Film className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-              <span className="whitespace-nowrap">Movies</span>
-            </Link>
+          {/* Action CTAs: Responsive Mobile & Laptop Flow */}
+          <div className="w-full pt-1 sm:pt-2">
+            {/* Mobile Stack: Watch Trailer Full Width, Secondary Grid 2-col */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 w-full sm:w-auto">
+              {current.video_url && (
+                <button
+                  onClick={() => onPlayVideo(current.video_url!, `${current.title} — Official Trailer / Stream`)}
+                  className="btn-gold w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-sm flex items-center justify-center gap-2.5 text-xs sm:text-sm uppercase font-extrabold cursor-pointer active:scale-95 transition-all shadow-[0_4px_25px_rgba(214,173,104,0.4)]"
+                >
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-black shrink-0" />
+                  <span className="whitespace-nowrap">Watch Trailer</span>
+                </button>
+              )}
 
-            <Link
-              to={`/productions/${current.slug}`}
-              className="px-4 sm:px-6 py-3 sm:py-3.5 rounded-sm bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 text-xs sm:text-sm uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all active:scale-95"
-            >
-              <Info className="w-4 h-4 text-[#D6AD68] shrink-0" />
-              <span>Details</span>
-            </Link>
+              {/* Secondary Buttons Row */}
+              <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-3">
+                <Link
+                  to="/movies"
+                  className="px-4 sm:px-6 py-3 sm:py-3.5 rounded-sm bg-[#D6AD68]/15 hover:bg-[#D6AD68] hover:text-black text-[#D6AD68] backdrop-blur-md border border-[#D6AD68]/40 text-xs sm:text-sm uppercase tracking-wider font-extrabold flex items-center justify-center gap-2 transition-all active:scale-95 text-center"
+                >
+                  <Film className="w-4 h-4 shrink-0" />
+                  <span className="whitespace-nowrap">Movies</span>
+                </Link>
+
+                <Link
+                  to={`/productions/${current.slug}`}
+                  className="px-4 sm:px-6 py-3 sm:py-3.5 rounded-sm bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 text-xs sm:text-sm uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 transition-all active:scale-95 text-center"
+                >
+                  <Info className="w-4 h-4 text-[#D6AD68] shrink-0" />
+                  <span>Details</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Slide Indicators & Navigation (Responsive positioning) */}
-      <div className="absolute bottom-5 sm:bottom-8 right-4 sm:right-8 z-20 flex items-center gap-2 sm:gap-4 bg-black/75 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-white/10 shadow-lg">
+      {/* Floating Audio Mute Toggle on Mobile (Top Right, Apple TV+ Style) */}
+      {current.video_url && (
+        <div className="sm:hidden absolute top-20 right-4 z-20">
+          <button
+            onClick={toggleMute}
+            className="h-8 px-2.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white flex items-center gap-1.5 text-[11px] font-medium shadow-lg active:scale-90 transition-transform"
+            aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-white/70" />
+                <span className="text-[10px] text-white/70 uppercase">Muted</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-[#D6AD68]" />
+                <span className="text-[10px] text-[#D6AD68] uppercase font-bold">Sound On</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* Slide Indicators & Navigation Dock (Desktop / Tablet bottom right) */}
+      <div className="hidden sm:flex absolute bottom-8 right-8 lg:right-12 z-20 items-center gap-3 bg-black/80 backdrop-blur-xl px-3 py-2 rounded-full border border-[#D6AD68]/30 shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
         {/* Inline Audio Toggle Button */}
         {current.video_url && (
           <button
             onClick={toggleMute}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10 hover:border-[#D6AD68]"
             title={isMuted ? 'Unmute Ambient Sound' : 'Mute Sound'}
           >
-            {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D6AD68]" />}
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#D6AD68]" />}
           </button>
         )}
 
-        {/* Previous Slide (Hidden on mobile to preserve touch swipe) */}
+        <div className="w-px h-5 bg-white/20" />
+
+        {/* Previous Slide */}
         <button
           onClick={prevSlide}
-          className="hidden sm:flex w-9 h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white items-center justify-center transition-colors cursor-pointer"
+          className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10 hover:border-[#D6AD68]"
           title="Previous Featured Title"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        {/* Dots */}
-        <div className="flex items-center gap-1 sm:gap-1.5 px-1">
+        {/* Dots with Pill Progress */}
+        <div className="flex items-center gap-2 px-1">
           {featuredList.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 currentIndex === idx
-                  ? 'w-5 sm:w-6 bg-[#D6AD68] shadow-[0_0_8px_rgba(214,173,104,0.8)]'
-                  : 'w-1.5 sm:w-2 bg-white/30 hover:bg-white/60'
+                  ? 'w-7 bg-[#D6AD68] shadow-[0_0_10px_rgba(214,173,104,0.9)]'
+                  : 'w-2 bg-white/30 hover:bg-white/60'
               }`}
               title={`Slide ${idx + 1}`}
             />
           ))}
         </div>
 
-        {/* Next Slide (Hidden on mobile to preserve touch swipe) */}
+        {/* Next Slide */}
         <button
           onClick={nextSlide}
-          className="hidden sm:flex w-9 h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white items-center justify-center transition-colors cursor-pointer"
+          className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D6AD68] hover:text-black text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10 hover:border-[#D6AD68]"
           title="Next Featured Title"
         >
           <ChevronRight className="w-4 h-4" />

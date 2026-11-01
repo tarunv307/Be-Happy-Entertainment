@@ -36,7 +36,7 @@ export const MobileBottomNav: React.FC = () => {
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.85)] pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080808]/95 backdrop-blur-2xl border-t border-[#D6AD68]/20 shadow-[0_-10px_35px_rgba(0,0,0,0.9)] pb-[max(0.5rem,env(safe-area-inset-bottom))]"
     >
       <div className="flex items-center justify-around px-2 pt-2 pb-1">
         {navItems.map((item) => {
@@ -55,12 +55,12 @@ export const MobileBottomNav: React.FC = () => {
             >
               {/* Active Indicator Glow Pip */}
               {isActive && (
-                <span className="absolute -top-2 w-8 h-1 rounded-full bg-gradient-to-r from-transparent via-[#D6AD68] to-transparent shadow-[0_0_10px_rgba(214,173,104,0.8)]" />
+                <span className="absolute -top-2 w-7 h-1 rounded-full bg-gradient-to-r from-transparent via-[#D6AD68] to-transparent shadow-[0_0_12px_rgba(214,173,104,0.9)]" />
               )}
 
               <div
                 className={`p-1 rounded-lg transition-transform duration-300 ${
-                  isActive ? 'scale-110 drop-shadow-[0_0_8px_rgba(214,173,104,0.6)]' : ''
+                  isActive ? 'scale-110 drop-shadow-[0_0_10px_rgba(214,173,104,0.7)]' : ''
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -80,3 +80,4 @@ export const MobileBottomNav: React.FC = () => {
     </nav>
   );
 };
+
