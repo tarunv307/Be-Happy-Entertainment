@@ -1,232 +1,215 @@
 import React from 'react';
+import { Film, Music, Radio, Award, Compass, Eye, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Eye, Target } from 'lucide-react';
-import { useData } from '../context/DataContext';
-import { ScrollReveal } from '../components/ui/ScrollReveal';
-import { TypographyMarquee } from '../components/ui/TypographyMarquee';
+import { KavinLogo } from '../components/brand/KavinLogo';
 
 export const AboutPage: React.FC = () => {
-  const { companySettings } = useData();
+  const capabilities = [
+    {
+      title: 'Feature Films',
+      desc: 'Developing and producing character-driven theatrical and streaming feature cinema with high visual and emotional payoff.',
+      link: '/movies',
+    },
+    {
+      title: 'Narrative Short Cinema',
+      desc: 'Crafting potent short films with festival pedigree like Mudhal Kadhal, defined by poetic cinematography and emotional depth.',
+      link: '/short-films',
+    },
+    {
+      title: 'Live Concerts & DJ Production',
+      desc: 'Pioneer DJ sets, large-scale stage sound reinforcement, and acoustic direction curated for unforgettable live audiences.',
+      link: '/concerts',
+    },
+    {
+      title: 'Sound Engineering & Audio Post',
+      desc: 'Comprehensive studio recording, Foley design, multi-track mixing, and acoustic mastering engineered by technical specialists.',
+      link: '/contact',
+    },
+  ];
 
   return (
-    <div className="bg-white pt-28 pb-24">
-      {/* Editorial Header */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
-        <ScrollReveal direction="up" delay={100}>
-          <span className="text-[11px] uppercase tracking-[0.25em] text-[#B69A65] font-semibold block mb-3">
-            Company Profile & Ethos
-          </span>
-          <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl font-normal text-[#121212] tracking-tight mb-6">
-            DISCIPLINE, PASSION <br />
-            <span className="italic text-[#6B6861]">& VISUAL ARTISTRY.</span>
-          </h1>
-          <p className="text-base sm:text-lg text-[#6B6861] font-light max-w-2xl mx-auto leading-relaxed">
-            {companySettings.company_about}
-          </p>
-        </ScrollReveal>
-      </section>
+    <div className="min-h-screen bg-[#080808] text-white pt-24 pb-20">
+      {/* ====================================================
+          HERO BANNER
+          ==================================================== */}
+      <div className="relative border-b border-white/10 overflow-hidden bg-gradient-to-b from-[#18130B] via-[#0E0E0E] to-[#080808] py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl flex flex-col items-start gap-4">
+            <span className="px-3 py-1 rounded-xs text-[10px] font-black uppercase tracking-[0.25em] bg-[#D6AD68] text-black">
+              STUDIO & VISION
+            </span>
 
-      {/* Hero Studio Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-        <ScrollReveal direction="up" delay={150}>
-          <div className="relative aspect-21/9 sm:aspect-16/7 overflow-hidden border border-[#E8E6E0] bg-[#FAF9F5] group">
+            <h1 className="font-cinematic font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-wide uppercase leading-tight">
+              DREAM. CREATE. ENTERTAIN.
+            </h1>
+
+            <p className="text-base sm:text-lg text-[#D6AD68] font-cinematic italic tracking-wider">
+              “EVERY FRAME TELLS A STORY.”
+            </p>
+
+            <p className="text-sm sm:text-base text-[#B5B5B5] leading-relaxed max-w-2xl font-light">
+              Kavin Production (collaborating with Be Happy Entertainment) is a creative entertainment house where cinema and sound converge. From evocative feature films and short cinema to electrifying live concerts, we craft experiences that linger in minds and hearts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ====================================================
+          FOUNDER SPOTLIGHT: KAVIN
+          ==================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="rounded-2xl overflow-hidden border border-[#D6AD68]/40 bg-[#121212] shadow-2xl">
+          <div className="relative aspect-21/9 sm:aspect-16/7 w-full overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1800&q=80"
-              alt="Kavin Production Studio Sound Stage"
-              className="w-full h-full object-cover grayscale contrast-115 transition-transform duration-700 group-hover:scale-105"
+              src="/media/kavin-director-banner.png"
+              alt="Kavin — Producer, Director & Sound Engineer"
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 sm:p-10">
-              <span className="text-white text-xs sm:text-sm tracking-widest uppercase font-medium bg-black/60 backdrop-blur-xs px-4 py-2 border border-white/20">
-                Studio Floor & Line Production Unit
-              </span>
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span className="text-[10px] text-[#D6AD68] uppercase font-bold tracking-[0.25em]">
+                  LEADERSHIP
+                </span>
+                <h3 className="font-cinematic font-black text-2xl sm:text-3xl text-white mt-1">
+                  Kavin
+                </h3>
+                <p className="text-xs text-[#B5B5B5]">
+                  Producer, Director & Sound Engineer | ECE Graduate & DJ
+                </p>
+              </div>
+
+              <div className="px-4 py-2 bg-black/80 backdrop-blur-md rounded-sm border border-white/10 text-xs font-mono text-[#D6AD68]">
+                IDEAS • STORIES • SOUND • BEYOND
+              </div>
             </div>
           </div>
-        </ScrollReveal>
-      </section>
 
-      {/* Our Story & Producer Kavin */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <div className="lg:col-span-5 relative">
-            <ScrollReveal direction="left" delay={100}>
-              <div className="border border-[#E8E6E0] p-2 bg-[#FAF9F5] shadow-xs group">
-                <div className="overflow-hidden">
-                  <img
-                    src={
-                      companySettings.producer_photo_url ||
-                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80'
-                    }
-                    alt={companySettings.producer_name || 'Producer Kavin'}
-                    className="w-full h-auto object-cover grayscale contrast-110 transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-              </div>
-              <div className="mt-4 p-4 bg-[#FAF9F5] border border-[#E8E6E0] text-xs">
-                <span className="font-semibold uppercase tracking-wider text-[#121212] block">
-                  {companySettings.producer_name || 'Kavin'}
-                </span>
-                <span className="text-[#6B6861]">
-                  {companySettings.producer_title || 'Producer & Founder'}
-                </span>
-              </div>
-            </ScrollReveal>
-          </div>
+          <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-[#B5B5B5] leading-relaxed">
+            <div>
+              <h4 className="font-cinematic font-bold text-lg text-white mb-2">
+                Creative Philosophy
+              </h4>
+              <p className="font-light">
+                “Good Stories, Better People. Same Passion, Different Medium.” With a foundational background in Electronics and Communication Engineering (ECE), Kavin bridges technical precision with evocative storytelling. Every narrative decision is built on empathy, and every acoustic cue is engineered for emotional clarity.
+              </p>
+            </div>
 
-          <div className="lg:col-span-7 space-y-6">
-            <ScrollReveal direction="up" delay={200}>
-              <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block">
-                The Journey
-              </span>
-              <h2 className="font-editorial text-3xl sm:text-5xl text-[#121212] font-normal">
-                OUR STORY.
-              </h2>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={300}>
-              <div className="space-y-4 text-sm sm:text-base text-[#6B6861] font-light leading-relaxed">
-                <p>
-                  Founded on the fundamental conviction that every frame must carry narrative intent,
-                  Kavin Production was established to bridge intimate artistic cinema with
-                  world-class commercial execution.
-                </p>
-                <p>
-                  Under the direct stewardship of Producer Kavin, the studio has assembled an agile,
-                  multidisciplinary team of cinematographers, directors, editors, colorists, and line
-                  producers. We handle the entire creative continuum: from initial script incubation
-                  and budgetary strategy to on-location physical production and Dolby-calibrated
-                  post-finishing.
-                </p>
-                <p>
-                  We do not believe in disposable content or generic templates. Every production we
-                  undertake is treated as a bespoke visual work tailored to resonate deeply with
-                  target audiences across festivals, cinema halls, or global digital streams.
-                </p>
-              </div>
-
-              <div className="p-6 bg-[#FAF9F5] border-l-2 border-[#B69A65] mt-6">
-                <h4 className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold mb-2">
-                  Producer Philosophy
-                </h4>
-                <p className="font-editorial text-base sm:text-lg italic text-[#121212]">
-                  “{companySettings.producer_philosophy}”
-                </p>
-              </div>
-            </ScrollReveal>
+            <div>
+              <h4 className="font-cinematic font-bold text-lg text-white mb-2">
+                The Filmmaking Routine
+              </h4>
+              <p className="font-light">
+                “Shoot. Edit. Mix. Create. Repeat.” From writing and directing titles like Mudhal Kadhal, Padikathavan, and Game to engineering live festival sound rigs, Kavin Production is rooted in relentless hands-on creative execution.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Mission & Vision */}
-      <section className="bg-[#FAF9F5] py-20 border-y border-[#E8E6E0] mb-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <ScrollReveal direction="up" delay={100}>
-              <div className="bg-white p-8 sm:p-12 border border-[#E8E6E0] space-y-4 h-full">
-                <div className="w-10 h-10 bg-[#FAF9F5] flex items-center justify-center text-[#B69A65]">
-                  <Target className="w-5 h-5" />
-                </div>
-                <h3 className="font-editorial text-2xl font-semibold text-[#121212]">Our Mission</h3>
-                <p className="text-sm text-[#6B6861] font-light leading-relaxed">
-                  {companySettings.mission_statement}
-                </p>
-              </div>
-            </ScrollReveal>
+      {/* ====================================================
+          VISION & MISSION
+          ==================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-8 rounded-xl bg-[#121212] border border-white/10 flex flex-col gap-4">
+            <div className="w-12 h-12 rounded-lg bg-[#D6AD68]/10 border border-[#D6AD68]/30 flex items-center justify-center text-[#D6AD68]">
+              <Eye className="w-6 h-6" />
+            </div>
+            <h3 className="font-cinematic font-bold text-xl text-white">Our Vision</h3>
+            <p className="text-sm text-[#B5B5B5] leading-relaxed font-light">
+              To build a celebrated modern entertainment company where cinematic storytelling, short films, and high-energy live concerts resonate globally, pushing technical boundaries while honoring human emotion.
+            </p>
+          </div>
 
-            <ScrollReveal direction="up" delay={200}>
-              <div className="bg-white p-8 sm:p-12 border border-[#E8E6E0] space-y-4 h-full">
-                <div className="w-10 h-10 bg-[#FAF9F5] flex items-center justify-center text-[#B69A65]">
-                  <Eye className="w-5 h-5" />
-                </div>
-                <h3 className="font-editorial text-2xl font-semibold text-[#121212]">Our Vision</h3>
-                <p className="text-sm text-[#6B6861] font-light leading-relaxed">
-                  {companySettings.vision_statement}
-                </p>
-              </div>
-            </ScrollReveal>
+          <div className="p-8 rounded-xl bg-[#121212] border border-white/10 flex flex-col gap-4">
+            <div className="w-12 h-12 rounded-lg bg-[#D6AD68]/10 border border-[#D6AD68]/30 flex items-center justify-center text-[#D6AD68]">
+              <Compass className="w-6 h-6" />
+            </div>
+            <h3 className="font-cinematic font-bold text-xl text-white">Our Mission</h3>
+            <p className="text-sm text-[#B5B5B5] leading-relaxed font-light">
+              To pioneer compelling visual and musical experiences by blending technical craft with courageous narrative direction — creating films and live performances that move audiences and leave a lasting impression.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Core Studio Values */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-28">
-        <ScrollReveal direction="up" delay={100}>
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block mb-2">
-              What Defines Us
-            </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl text-[#121212] font-normal">
-              OUR CORE VALUES.
-            </h2>
-          </div>
-        </ScrollReveal>
+      {/* ====================================================
+          PRODUCTION CAPABILITIES
+          ==================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-[#D6AD68] font-bold">
+            PORTFOLIO PILLARS
+          </span>
+          <h2 className="font-cinematic font-black text-2xl sm:text-4xl text-white uppercase tracking-wide mt-1">
+            CORE PRODUCTION CAPABILITIES
+          </h2>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: 'Artistic Integrity',
-              desc: 'Refusing compromise on visual rhythm, thematic honesty, and cinematic craft.',
-            },
-            {
-              title: 'Logistical Precision',
-              desc: 'Rigorous schedule adherence, transparent budgeting, and seamless set coordination.',
-            },
-            {
-              title: 'Optical Innovation',
-              desc: 'Continuous adoption of bleeding-edge sensor technology and bespoke anamorphic optics.',
-            },
-            {
-              title: 'Collaborative Trust',
-              desc: 'Honoring client creative briefs and empowering directors, writers, and technical crew.',
-            },
-          ].map((val, idx) => (
-            <ScrollReveal key={idx} direction="up" delay={100 + idx * 80}>
-              <div className="p-8 border border-[#E8E6E0] bg-[#FAF9F5] hover:border-[#B69A65] transition-all duration-300 h-full flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-mono text-[#B69A65] block mb-3 font-semibold">
-                    0{idx + 1}
-                  </span>
-                  <h4 className="font-editorial text-xl font-semibold text-[#121212] mb-2">
-                    {val.title}
-                  </h4>
-                  <p className="text-xs text-[#6B6861] leading-relaxed font-light">{val.desc}</p>
-                </div>
+          {capabilities.map((cap, i) => (
+            <div
+              key={i}
+              className="p-6 rounded-xl bg-[#121212] border border-white/10 hover:border-[#D6AD68]/50 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="font-cinematic font-bold text-lg text-white mb-2">
+                  {cap.title}
+                </h4>
+                <p className="text-xs text-[#B5B5B5] leading-relaxed font-light">
+                  {cap.desc}
+                </p>
               </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
 
-      {/* Production Milestone Framework */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-        <ScrollReveal direction="up" delay={150}>
-          <div className="border border-[#E8E6E0] p-8 sm:p-12 bg-[#FAF9F5]">
-            <div className="max-w-3xl">
-              <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block mb-2">
-                Studio Operations
-              </span>
-              <h3 className="font-editorial text-2xl sm:text-3xl text-[#121212] font-semibold mb-4">
-                Commitment to Excellence
-              </h3>
-              <p className="text-sm text-[#6B6861] font-light leading-relaxed mb-8">
-                Whether you are an independent filmmaker with a festival concept, an advertising
-                agency with a multi-market campaign, or an enterprise seeking an iconic brand film,
-                Kavin Production provides the vision, team, and infrastructure to realize your ambition.
-              </p>
               <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#121212] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-colors rounded-none shadow-xs group"
+                to={cap.link}
+                className="mt-6 text-xs text-[#D6AD68] hover:text-white font-semibold uppercase tracking-wider flex items-center gap-1"
               >
-                <span>Work With Producer Kavin</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#B69A65] group-hover:text-white transition-colors" />
+                <span>Explore</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-          </div>
-        </ScrollReveal>
-      </section>
+          ))}
+        </div>
+      </div>
 
-      {/* Subtle Marquee Footer Accent */}
-      <div className="mt-20">
-        <TypographyMarquee speed="slow" />
+      {/* ====================================================
+          OFFICIAL SOCIAL CHANNELS
+          ==================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+        <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-[#17130A] via-[#101010] to-[#0A0A0A] border border-[#D6AD68]/30 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div>
+            <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68]">
+              OFFICIAL CHANNELS
+            </span>
+            <h3 className="font-cinematic font-black text-2xl sm:text-3xl text-white mt-1">
+              Connect With Kavin Production
+            </h3>
+            <p className="text-xs sm:text-sm text-[#B5B5B5] mt-1 font-light">
+              Follow our official media profiles on YouTube (@kavin_kp) and Instagram (@be_happy_entertainment24).
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a
+              href="https://youtube.com/@kavin_kp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 rounded-sm bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider"
+            >
+              YouTube
+            </a>
+            <a
+              href="https://www.instagram.com/be_happy_entertainment24/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold px-5 py-3 rounded-sm text-black font-extrabold text-xs uppercase tracking-wider"
+            >
+              Instagram
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

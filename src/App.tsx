@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 
@@ -9,8 +9,10 @@ import { AdminLayout } from './pages/admin/AdminLayout';
 
 // Public Pages
 import { HomePage } from './pages/HomePage';
+import { MoviesPage } from './pages/MoviesPage';
+import { ShortFilmsPage } from './pages/ShortFilmsPage';
+import { ConcertsPage } from './pages/ConcertsPage';
 import { AboutPage } from './pages/AboutPage';
-import { ProductionsPage } from './pages/ProductionsPage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { TeamPage } from './pages/TeamPage';
@@ -34,12 +36,16 @@ function App() {
       <DataProvider>
         <AuthProvider>
           <Routes>
-            {/* Public Routes with Navbar and Footer */}
+            {/* Public Routes with Cinematic Layout */}
             <Route path="/" element={<PublicLayout />}>
               <Route index element={<HomePage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="productions" element={<ProductionsPage />} />
+              <Route path="movies" element={<MoviesPage />} />
+              <Route path="movies/:slug" element={<ProjectDetailPage />} />
+              <Route path="productions" element={<MoviesPage />} />
               <Route path="productions/:slug" element={<ProjectDetailPage />} />
+              <Route path="short-films" element={<ShortFilmsPage />} />
+              <Route path="concerts" element={<ConcertsPage />} />
+              <Route path="about" element={<AboutPage />} />
               <Route path="services" element={<ServicesPage />} />
               <Route path="team" element={<TeamPage />} />
               <Route path="gallery" element={<GalleryPage />} />

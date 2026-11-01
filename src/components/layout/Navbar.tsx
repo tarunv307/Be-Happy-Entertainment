@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUpRight, Film, Lock } from 'lucide-react';
-import { useData } from '../../context/DataContext';
+import { Search, Film, Music, Tv, Info, Mail, Lock, Menu, X, Sparkles, User } from 'lucide-react';
+import { InstagramIcon, YoutubeIcon } from '../ui/SocialIcons';
+import { KavinLogo } from '../brand/KavinLogo';
+import { GlobalSearchModal } from '../ui/GlobalSearchModal';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onReplayIntro?: () => void;
+  onPlayVideo?: (videoUrl: string, title: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
-  const { companySettings } = useData();
-
-  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 25) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 30);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu on page navigate
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Productions', path: '/productions' },
-    { name: 'Services', path: '/services' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Our Team', path: '/team' },
+    { name: 'Movies', path: '/movies' },
+    { name: 'Short Films', path: '/short-films' },
+    { name: 'Concerts', path: '/concerts' },
+    { name: 'About Us', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -44,47 +44,35 @@ export const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-out ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#E8E6E0] py-0'
-            : isHome
-            ? 'bg-transparent border-b border-[#E8E6E0]/40 py-1'
-            : 'bg-white border-b border-[#E8E6E0] py-0'
+            ? 'bg-[#080808]/95 backdrop-blur-xl border-b border-[#D6AD68]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)] py-3'
+            : 'bg-gradient-to-b from-black/90 via-black/40 to-transparent py-4 sm:py-5 border-b border-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-          {/* Brand Wordmark (Left) */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-10 h-10 bg-[#121212] rounded-none flex items-center justify-center text-white transition-all duration-500 group-hover:scale-105 group-hover:bg-[#B69A65] shrink-0 shadow-xs">
-              <Film className="w-5 h-5 text-[#B69A65] group-hover:text-white transition-colors" />
-            </div>
-            <div className="flex flex-col justify-center">
-              <span className="font-cinematic text-lg sm:text-xl font-bold tracking-widest text-[#121212] uppercase leading-none transition-colors group-hover:text-[#B69A65]">
-                {companySettings.brand_name || 'KAVIN PRODUCTION'}
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#6B6861] font-medium mt-1">
-                Cinematic Media Studio
-              </span>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+          {/* Brand Logo (Left) */}
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
+            <KavinLogo variant="full" size="md" animated={true} />
           </Link>
 
           {/* Desktop Navigation Links (Center) */}
-          <nav className="hidden lg:flex items-center justify-center gap-5 xl:gap-7">
+          <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`text-xs xl:text-[13px] tracking-wider uppercase font-medium transition-colors duration-200 relative py-2 ${
+                  className={`text-xs xl:text-[13px] tracking-[0.16em] uppercase font-medium transition-all duration-200 relative py-1.5 ${
                     isActive
-                      ? 'text-[#121212] font-bold'
-                      : 'text-[#6B6861] hover:text-[#121212]'
+                      ? 'text-[#D6AD68] font-bold drop-shadow-[0_0_8px_rgba(214,173,104,0.5)]'
+                      : 'text-[#B5B5B5] hover:text-white'
                   }`}
                 >
                   <span>{link.name}</span>
-                  {/* Subtle Gold Underline */}
+                  {/* Subtle Gold Glow Active Underline */}
                   <span
-                    className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#B69A65] transition-transform duration-300 ${
-                      isActive ? 'scale-x-100' : 'scale-x-0 hover:scale-x-100'
+                    className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#D6AD68] to-transparent transition-transform duration-300 ${
+                      isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100'
                     }`}
                   />
                 </Link>
@@ -92,43 +80,95 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Action CTAs (Right) */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            {/* Distinct Admin CMS Button */}
+          {/* Actions & Social Links (Right) */}
+          <div className="hidden lg:flex items-center gap-3 xl:gap-4 shrink-0">
+            {/* Search Trigger */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1.5"
+              title="Search platform (Cmd+K)"
+            >
+              <Search className="w-4 h-4" />
+              <span className="text-[11px] uppercase tracking-wider text-[#7E7E7E] hidden xl:inline">
+                Search
+              </span>
+            </button>
+
+            {/* Official Instagram */}
+            <a
+              href="https://www.instagram.com/be_happy_entertainment24/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors"
+              title="Official Instagram"
+            >
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+
+            {/* Official YouTube */}
+            <a
+              href="https://youtube.com/@kavin_kp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full text-[#B5B5B5] hover:text-red-500 hover:bg-white/5 transition-colors"
+              title="Official YouTube Channel"
+            >
+              <YoutubeIcon className="w-4 h-4" />
+            </a>
+
+            {/* Intro Replay Button */}
+            {onReplayIntro && (
+              <button
+                onClick={onReplayIntro}
+                className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors cursor-pointer"
+                title="Replay Cinematic Intro"
+              >
+                <Sparkles className="w-4 h-4" />
+              </button>
+            )}
+
+            {/* Profile Icon */}
             <Link
               to="/admin"
-              className="h-10 px-4 inline-flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#121212] bg-[#FAF9F5] border border-[#B69A65] hover:bg-[#121212] hover:text-white hover:border-[#121212] shadow-xs rounded-none transition-all duration-300 group"
-              title="Access Admin CMS Portal"
+              className="p-2 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-center border border-white/10 hover:border-[#D6AD68]/40"
+              title="Profile / CMS Sign In"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A65] animate-pulse group-hover:bg-white shrink-0" />
-              <Lock className="w-3.5 h-3.5 text-[#B69A65] group-hover:text-white transition-colors shrink-0" />
-              <span className="font-mono text-[10px]">ADMIN CMS</span>
+              <User className="w-4 h-4" />
             </Link>
 
-            {/* Start A Project CTA */}
+            {/* Admin CMS Access */}
             <Link
-              to="/contact"
-              className="h-10 px-6 inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-widest bg-[#121212] text-white hover:bg-[#B69A65] transition-all duration-300 rounded-none shadow-xs group shrink-0 relative overflow-hidden"
+              to="/admin"
+              className="h-9 px-3.5 inline-flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-[#D6AD68] bg-[#161616] border border-[#D6AD68]/40 hover:bg-[#D6AD68] hover:text-black transition-all duration-300 rounded-sm shadow-xs"
+              title="Admin CMS Portal"
             >
-              <span>Start A Project</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#B69A65] group-hover:text-white shrink-0" />
+              <Lock className="w-3.5 h-3.5 shrink-0" />
+              <span>CMS</span>
             </Link>
           </div>
 
-          {/* Mobile Menu Hamburger Button (Hidden on lg+) */}
-          <div className="lg:hidden flex items-center gap-2">
+          {/* Mobile Right Controls */}
+          <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2.5 text-[#B5B5B5] hover:text-[#D6AD68] active:scale-90 transition-transform cursor-pointer"
+              title="Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
             <Link
               to="/admin"
-              className="h-8 px-2.5 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#121212] bg-[#FAF9F5] border border-[#B69A65] rounded-none"
+              className="p-2.5 text-[#B5B5B5] hover:text-[#D6AD68] active:scale-90 transition-transform"
+              title="Profile / CMS"
             >
-              <Lock className="w-3 h-3 text-[#B69A65]" />
-              <span>CMS</span>
+              <User className="w-5 h-5" />
             </Link>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2.5 text-[#D6AD68] hover:text-white active:scale-90 transition-transform cursor-pointer"
               aria-label="Toggle Navigation Menu"
-              className="p-2 text-[#121212] hover:text-[#B69A65] focus:outline-hidden cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -136,54 +176,81 @@ export const Navbar: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay with smooth entrance */}
+      {/* Mobile Menu Drawer (Touch friendly with bottom dock clearance) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl pt-24 px-6 lg:hidden flex flex-col justify-between pb-8 transition-opacity duration-300">
+        <div className="fixed inset-0 z-40 bg-[#080808]/98 backdrop-blur-2xl pt-24 px-6 lg:hidden flex flex-col justify-between pb-28 animate-fade-in overflow-y-auto">
           <div className="flex flex-col space-y-4">
-            <p className="text-[11px] tracking-widest uppercase text-[#B69A65] font-semibold border-b border-[#E8E6E0] pb-2">
-              Studio Navigation
-            </p>
-            {navLinks.map((link, idx) => {
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <span className="text-[11px] tracking-[0.25em] uppercase text-[#D6AD68] font-bold">
+                PLATFORM NAVIGATION
+              </span>
+              <span className="text-[10px] text-[#7E7E7E] uppercase">
+                DREAM. CREATE. ENTERTAIN.
+              </span>
+            </div>
+
+            {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  style={{ animationDelay: `${idx * 40}ms` }}
-                  className={`text-2xl font-editorial tracking-wide transition-colors ${
-                    isActive ? 'text-[#B69A65] italic font-semibold' : 'text-[#121212] hover:text-[#B69A65]'
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-2xl font-cinematic font-bold tracking-wider transition-colors py-2 active:text-[#D6AD68] flex items-center justify-between ${
+                    isActive ? 'text-[#D6AD68]' : 'text-white hover:text-[#D6AD68]'
                   }`}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  {isActive && (
+                    <span className="w-2 h-2 rounded-full bg-[#D6AD68] shadow-[0_0_8px_rgba(214,173,104,0.8)]" />
+                  )}
                 </Link>
               );
             })}
           </div>
 
-          <div className="border-t border-[#E8E6E0] pt-6 flex flex-col gap-3">
-            <Link
-              to="/contact"
-              className="w-full text-center py-4 bg-[#121212] text-white uppercase text-xs tracking-widest font-semibold hover:bg-[#B69A65] transition-colors rounded-none shadow-sm"
-            >
-              Start A Project
-            </Link>
+          <div className="border-t border-white/10 pt-6 flex flex-col gap-4">
+            {/* Socials Row */}
+            <div className="flex items-center justify-around py-2.5 bg-white/5 rounded-lg border border-white/5">
+              <a
+                href="https://www.instagram.com/be_happy_entertainment24/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs text-[#B5B5B5] hover:text-[#D6AD68] active:scale-95 transition-transform"
+              >
+                <InstagramIcon className="w-4 h-4 text-[#D6AD68]" />
+                <span>Instagram</span>
+              </a>
+              <div className="w-px h-4 bg-white/20" />
+              <a
+                href="https://youtube.com/@kavin_kp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs text-[#B5B5B5] hover:text-red-400 active:scale-95 transition-transform"
+              >
+                <YoutubeIcon className="w-4 h-4 text-red-500" />
+                <span>YouTube</span>
+              </a>
+            </div>
 
             <Link
               to="/admin"
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#FAF9F5] border border-[#B69A65] text-[#121212] text-xs uppercase tracking-widest font-bold hover:bg-[#121212] hover:text-white transition-all shadow-xs rounded-none"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#151515] border border-[#D6AD68]/40 text-[#D6AD68] text-xs uppercase tracking-widest font-bold hover:bg-[#D6AD68] hover:text-black transition-all rounded-sm active:scale-98"
             >
-              <span className="w-2 h-2 rounded-full bg-[#B69A65] animate-pulse" />
-              <Lock className="w-3.5 h-3.5 text-[#B69A65]" />
-              <span>Studio Admin CMS Portal</span>
+              <Lock className="w-4 h-4" />
+              <span>Admin CMS Portal</span>
             </Link>
-
-            <div className="flex justify-between items-center text-[10px] text-[#6B6861] pt-1">
-              <span>{companySettings.brand_name || 'KAVIN PRODUCTION'}</span>
-              <span>Light Theme Official</span>
-            </div>
           </div>
         </div>
       )}
+
+      {/* Global Search Modal */}
+      <GlobalSearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onPlayVideo={onPlayVideo}
+      />
     </>
   );
 };

@@ -1,5 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="16" fill="#171717"/>
-  <path d="M28 24 L40 24 L40 76 L28 76 Z" fill="#B69A65"/>
-  <path d="M40 50 L68 24 L78 24 L52 50 L80 76 L70 76 Z" fill="#FFFFFF"/>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2D6"/>
+      <stop offset="40%" stop-color="#D6AD68"/>
+      <stop offset="100%" stop-color="#8C6627"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="90" height="90" rx="16" fill="#0A0A0A" stroke="url(#gold)" stroke-width="4"/>
+  <rect x="12" y="18" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="12" y="36" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="12" y="56" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="12" y="74" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="82" y="18" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="82" y="36" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="82" y="56" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <rect x="82" y="74" width="6" height="8" rx="1.5" fill="url(#gold)"/>
+  <path d="M28 20H36V80H28V20Z" fill="url(#gold)"/>
+  <path d="M35 52L52 24H62L43 55L63 80H52L35 58" fill="url(#gold)"/>
+  <path d="M48 32L68 46L48 60Z" fill="url(#gold)"/>
+  <circle cx="68" cy="46" r="2.5" fill="#FFF"/>
 </svg>

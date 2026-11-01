@@ -10,9 +10,11 @@ import {
   X,
   Check,
   ExternalLink,
+  Play,
 } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { Production, ProductionCategory } from '../../types/database';
+import { CinematicPlayerModal } from '../../components/player/CinematicPlayerModal';
 
 export const ProductionsAdmin: React.FC = () => {
   const { productions, addProduction, updateProduction, deleteProduction } = useData();
@@ -24,13 +26,17 @@ export const ProductionsAdmin: React.FC = () => {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState<ProductionCategory>('Feature Films');
+  const [contentType, setContentType] = useState<'movie' | 'short-film' | 'concert'>('movie');
   const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [runtime, setRuntime] = useState('');
+  const [tagline, setTagline] = useState('');
   const [shortDesc, setShortDesc] = useState('');
   const [desc, setDesc] = useState('');
   const [posterUrl, setPosterUrl] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [youtubeTrailer, setYoutubeTrailer] = useState('');
-  const [director, setDirector] = useState('');
+  const [director, setDirector] = useState('Kavin');
   const [producer, setProducer] = useState('Kavin');
   const [cinematographer, setCinematographer] = useState('');
   const [editor, setEditor] = useState('');
@@ -41,18 +47,29 @@ export const ProductionsAdmin: React.FC = () => {
   const [isPublished, setIsPublished] = useState(true);
   const [isFeatured, setIsFeatured] = useState(false);
 
+  // Quick player preview state
+  const [previewVideo, setPreviewVideo] = useState<{ isOpen: boolean; url: string; title: string }>({
+    isOpen: false,
+    url: '',
+    title: '',
+  });
+
   const resetForm = () => {
     setEditingId(null);
     setTitle('');
     setSlug('');
     setCategory('Feature Films');
+    setContentType('movie');
     setYear(new Date().getFullYear());
+    setRuntime('');
+    setTagline('');
     setShortDesc('');
     setDesc('');
     setPosterUrl('');
     setCoverUrl('');
+    setVideoUrl('');
     setYoutubeTrailer('');
-    setDirector('');
+    setDirector('Kavin');
     setProducer('Kavin');
     setCinematographer('');
     setEditor('');
@@ -72,13 +89,17 @@ export const ProductionsAdmin: React.FC = () => {
     setTitle(prod.title);
     setSlug(prod.slug);
     setCategory(prod.category);
+    setContentType(prod.content_type || 'movie');
     setYear(prod.year);
+    setRuntime(prod.runtime || '');
+    setTagline(prod.tagline || '');
     setShortDesc(prod.short_description);
     setDesc(prod.description);
     setPosterUrl(prod.poster_url);
     setCoverUrl(prod.cover_url);
+    setVideoUrl(prod.video_url || '');
     setYoutubeTrailer(prod.youtube_trailer_url || '');
-    setDirector(prod.director);
+    setDirector(prod.director || 'Kavin');
     setProducer(prod.producer || 'Kavin');
     setCinematographer(prod.cinematographer || '');
     setEditor(prod.editor || '');
@@ -108,15 +129,15 @@ export const ProductionsAdmin: React.FC = () => {
       title,
       slug: slug || title.toLowerCase().replace(/\s+/g, '-'),
       category,
+      content_type: contentType,
       year: Number(year),
+      runtime,
+      tagline,
       short_description: shortDesc,
       description: desc,
-      poster_url:
-        posterUrl ||
-        'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
-      cover_url:
-        coverUrl ||
-        'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1600&q=80',
+      poster_url: posterUrl || '/media/padikathavan-poster.webp',
+      cover_url: coverUrl || posterUrl || '/media/padikathavan-poster.webp',
+      video_url: videoUrl,
       youtube_trailer_url: youtubeTrailer,
       director,
       producer,
@@ -146,7 +167,7 @@ export const ProductionsAdmin: React.FC = () => {
   };
 
   const handleDelete = async (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to remove "${title}" from productions?`)) {
+    if (window.confirm(`Are you sure you want to remove "${title}" from the catalog?`)) {
       await deleteProduction(id);
     }
   };
@@ -162,19 +183,19 @@ export const ProductionsAdmin: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Title & Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E9E7E2]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
         <div>
-          <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block mb-1">
+          <span className="text-xs uppercase tracking-widest text-[#D6AD68] font-bold block mb-1">
             Repertoire Database
           </span>
-          <h1 className="font-editorial text-3xl font-semibold text-[#171717]">
-            Production Management
+          <h1 className="font-cinematic text-3xl font-black text-white uppercase tracking-wider">
+            PRODUCTION & OTT MANAGEMENT
           </h1>
         </div>
 
         <button
           onClick={openCreateModal}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#171717] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-colors cursor-pointer shadow-xs"
+          className="btn-gold inline-flex items-center gap-2 px-5 py-2.5 rounded-sm text-xs uppercase font-extrabold cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Production</span>
@@ -182,51 +203,75 @@ export const ProductionsAdmin: React.FC = () => {
       </div>
 
       {/* Productions Table */}
-      <div className="bg-white border border-[#E9E7E2] overflow-hidden shadow-xs">
+      <div className="bg-[#121212] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#F7F6F3] text-[#777777] uppercase tracking-wider font-semibold border-b border-[#E9E7E2]">
+            <thead className="bg-[#1A1A1A] text-[#8E8E8E] uppercase tracking-wider font-semibold border-b border-white/10">
               <tr>
                 <th className="py-3 px-4">Poster</th>
                 <th className="py-3 px-4">Project Title</th>
-                <th className="py-3 px-4">Category</th>
+                <th className="py-3 px-4">Type</th>
                 <th className="py-3 px-4">Year</th>
                 <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 text-center">Video Stream</th>
                 <th className="py-3 px-4 text-center">Featured</th>
                 <th className="py-3 px-4 text-center">Published</th>
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E9E7E2]">
+            <tbody className="divide-y divide-white/5">
               {productions.map((prod) => (
-                <tr key={prod.id} className="hover:bg-[#F7F6F3]/50 transition-colors">
+                <tr key={prod.id} className="hover:bg-white/5 transition-colors">
                   <td className="py-3 px-4">
                     <img
                       src={prod.poster_url || prod.cover_url}
                       alt={prod.title}
-                      className="w-12 h-14 object-cover border border-[#E9E7E2]"
+                      className="w-12 h-16 object-cover rounded-sm border border-white/10"
                     />
                   </td>
-                  <td className="py-3 px-4 font-medium text-[#171717]">
-                    <div className="text-sm font-semibold">{prod.title}</div>
-                    <div className="text-[11px] text-[#777777]">
+                  <td className="py-3 px-4 font-medium text-white">
+                    <div className="text-sm font-cinematic font-bold">{prod.title}</div>
+                    <div className="text-[11px] text-[#7E7E7E] mt-0.5">
                       dir. {prod.director} • prod. {prod.producer}
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-[#777777]">{prod.category}</td>
-                  <td className="py-3 px-4 text-[#777777]">{prod.year}</td>
+                  <td className="py-3 px-4 text-[#B5B5B5]">
+                    <span className="px-2 py-0.5 rounded-xs text-[10px] uppercase font-mono bg-white/5 text-[#D6AD68]">
+                      {prod.content_type || 'movie'}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 text-[#B5B5B5]">{prod.year}</td>
                   <td className="py-3 px-4">
-                    <span className="px-2 py-0.5 text-[10px] uppercase font-semibold bg-[#F7F6F3] border border-[#E9E7E2] text-[#171717]">
+                    <span className="px-2 py-0.5 text-[10px] uppercase font-semibold bg-white/5 border border-white/10 text-white rounded-xs">
                       {prod.status}
                     </span>
                   </td>
                   <td className="py-3 px-4 text-center">
+                    {prod.video_url ? (
+                      <button
+                        onClick={() =>
+                          setPreviewVideo({
+                            isOpen: true,
+                            url: prod.video_url!,
+                            title: prod.title,
+                          })
+                        }
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D6AD68]/20 text-[#D6AD68] hover:bg-[#D6AD68] hover:text-black border border-[#D6AD68]/40 text-[10px] font-bold uppercase transition-all cursor-pointer"
+                      >
+                        <Play className="w-3 h-3 fill-current" />
+                        <span>Stream</span>
+                      </button>
+                    ) : (
+                      <span className="text-[#555] text-[10px] uppercase font-mono">No Video</span>
+                    )}
+                  </td>
+                  <td className="py-3 px-4 text-center">
                     <button
                       onClick={() => toggleFeatured(prod)}
-                      className={`p-1 transition-colors cursor-pointer ${
-                        prod.is_featured ? 'text-[#B69A65]' : 'text-neutral-300 hover:text-neutral-500'
+                      className={`p-1.5 transition-colors cursor-pointer ${
+                        prod.is_featured ? 'text-[#D6AD68]' : 'text-white/20 hover:text-white/60'
                       }`}
-                      title={prod.is_featured ? 'Featured on Home' : 'Not Featured'}
+                      title={prod.is_featured ? 'Featured on Hero' : 'Not Featured'}
                     >
                       <Star className={`w-4 h-4 ${prod.is_featured ? 'fill-current' : ''}`} />
                     </button>
@@ -234,31 +279,25 @@ export const ProductionsAdmin: React.FC = () => {
                   <td className="py-3 px-4 text-center">
                     <button
                       onClick={() => togglePublish(prod)}
-                      className={`p-1 transition-colors cursor-pointer ${
-                        prod.is_published
-                          ? 'text-emerald-600'
-                          : 'text-neutral-400 hover:text-neutral-600'
+                      className={`p-1.5 transition-colors cursor-pointer ${
+                        prod.is_published ? 'text-emerald-400' : 'text-white/20 hover:text-white/60'
                       }`}
-                      title={prod.is_published ? 'Published (Public)' : 'Draft (Unlisted)'}
+                      title={prod.is_published ? 'Published (Live)' : 'Draft (Unlisted)'}
                     >
-                      {prod.is_published ? (
-                        <Eye className="w-4 h-4" />
-                      ) : (
-                        <EyeOff className="w-4 h-4" />
-                      )}
+                      {prod.is_published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
                   </td>
                   <td className="py-3 px-4 text-right space-x-2">
                     <button
                       onClick={() => openEditModal(prod)}
-                      className="p-1.5 text-[#777777] hover:text-[#171717] transition-colors cursor-pointer"
+                      className="p-1.5 text-[#B5B5B5] hover:text-[#D6AD68] transition-colors cursor-pointer"
                       title="Edit Production"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(prod.id, prod.title)}
-                      className="p-1.5 text-[#777777] hover:text-red-600 transition-colors cursor-pointer"
+                      className="p-1.5 text-[#B5B5B5] hover:text-red-400 transition-colors cursor-pointer"
                       title="Delete Production"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -271,96 +310,210 @@ export const ProductionsAdmin: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal Dialog for Create/Edit */}
+      {/* Edit / Create Production Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white border border-[#E9E7E2] max-w-3xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative">
-            <button
-              onClick={() => setModalOpen(false)}
-              className="absolute top-5 right-5 text-[#777777] hover:text-[#171717] cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <span className="text-[10px] uppercase tracking-widest text-[#B69A65] font-semibold block mb-1">
-              Production Editor
-            </span>
-            <h3 className="font-editorial text-2xl font-semibold text-[#171717] mb-6">
-              {editingId ? 'Edit Production' : 'Create New Production'}
-            </h3>
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-[#141414] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8">
+            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+              <h2 className="font-cinematic font-bold text-xl text-white">
+                {editingId ? 'Edit Production & OTT Metadata' : 'Add New Cinematic Production'}
+              </h2>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="p-1 text-white/50 hover:text-white cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Project Title *
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Film / Title Name *
                   </label>
                   <input
                     type="text"
                     required
                     value={title}
                     onChange={(e) => handleTitleChange(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    URL Slug *
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    URL Slug
                   </label>
                   <input
                     type="text"
                     required
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Category *
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Content Classification *
                   </label>
                   <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value as ProductionCategory)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
+                    value={contentType}
+                    onChange={(e) => setContentType(e.target.value as any)}
+                    className="w-full bg-[#1A1A1A] border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
                   >
-                    <option value="Feature Films">Feature Films</option>
-                    <option value="Short Films">Short Films</option>
-                    <option value="Music Videos">Music Videos</option>
-                    <option value="Commercial Advertisements">Commercial Advertisements</option>
-                    <option value="Corporate Films">Corporate Films</option>
-                    <option value="Event Productions">Event Productions</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Digital Content">Digital Content</option>
-                    <option value="Other Media Productions">Other Media Productions</option>
+                    <option value="movie">Movie / Feature Film</option>
+                    <option value="short-film">Short Film</option>
+                    <option value="concert">Concert / Musical Event</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Year *
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Release Year
                   </label>
                   <input
                     type="number"
-                    required
                     value={year}
                     onChange={(e) => setYear(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Runtime
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 22m or 1h 48m"
+                    value={runtime}
+                    onChange={(e) => setRuntime(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                  Tagline / Catchphrase
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Some stories find you... First love. Lasts forever."
+                  value={tagline}
+                  onChange={(e) => setTagline(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Poster URL *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="/media/..."
+                    value={posterUrl}
+                    onChange={(e) => setPosterUrl(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Cover / Banner URL
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="/media/..."
+                    value={coverUrl}
+                    onChange={(e) => setCoverUrl(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Actual Video URL (MP4 Stream)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="/media/padikathavan.mp4"
+                    value={videoUrl}
+                    onChange={(e) => setVideoUrl(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    YouTube URL
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="https://youtube.com/..."
+                    value={youtubeTrailer}
+                    onChange={(e) => setYoutubeTrailer(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                  Synopsis / Story Description
+                </label>
+                <textarea
+                  rows={3}
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Director
+                  </label>
+                  <input
+                    type="text"
+                    value={director}
+                    onChange={(e) => setDirector(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
+                    Producer
+                  </label>
+                  <input
+                    type="text"
+                    value={producer}
+                    onChange={(e) => setProducer(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div>
+                  <label className="text-xs uppercase font-bold text-[#B5B5B5] block mb-1">
                     Production Status
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
+                    className="w-full bg-[#1A1A1A] border border-white/10 focus:border-[#D6AD68] rounded-sm p-2.5 text-xs text-white focus:outline-hidden"
                   >
                     <option value="Pre-Production">Pre-Production</option>
                     <option value="In Production">In Production</option>
@@ -369,186 +522,61 @@ export const ProductionsAdmin: React.FC = () => {
                     <option value="Released">Released</option>
                   </select>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                  Short Description * (Catalog summary)
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={shortDesc}
-                  onChange={(e) => setShortDesc(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                  Full Narrative / Description *
-                </label>
-                <textarea
-                  rows={4}
-                  required
-                  value={desc}
-                  onChange={(e) => setDesc(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Poster Image URL *
-                  </label>
-                  <input
-                    type="url"
-                    required
-                    value={posterUrl}
-                    onChange={(e) => setPosterUrl(e.target.value)}
-                    placeholder="https://..."
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Cover Banner URL
-                  </label>
-                  <input
-                    type="url"
-                    value={coverUrl}
-                    onChange={(e) => setCoverUrl(e.target.value)}
-                    placeholder="https://..."
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                  YouTube Trailer / Video URL
-                </label>
-                <input
-                  type="url"
-                  value={youtubeTrailer}
-                  onChange={(e) => setYoutubeTrailer(e.target.value)}
-                  placeholder="https://www.youtube.com/watch?v=..."
-                  className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Producer *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={producer}
-                    onChange={(e) => setProducer(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Director *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={director}
-                    onChange={(e) => setDirector(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Cinematographer (DP)
-                  </label>
-                  <input
-                    type="text"
-                    value={cinematographer}
-                    onChange={(e) => setCinematographer(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                    Lead Editor
-                  </label>
-                  <input
-                    type="text"
-                    value={editor}
-                    onChange={(e) => setEditor(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#171717] mb-1">
-                  Cast & Crew Highlights
-                </label>
-                <input
-                  type="text"
-                  value={castCrew}
-                  onChange={(e) => setCastCrew(e.target.value)}
-                  placeholder="Key talent, starring actors, production designers..."
-                  className="w-full px-3 py-2 text-xs bg-[#F7F6F3] border border-[#E9E7E2] focus:outline-hidden focus:border-[#B69A65]"
-                />
-              </div>
-
-              {/* Toggles */}
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold uppercase tracking-wider text-[#171717]">
+                <div className="flex items-center gap-2 pt-6">
                   <input
                     type="checkbox"
-                    checked={isPublished}
-                    onChange={(e) => setIsPublished(e.target.checked)}
-                    className="w-4 h-4 text-[#B69A65]"
-                  />
-                  <span>Published (Visible to Public)</span>
-                </label>
-
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold uppercase tracking-wider text-[#171717]">
-                  <input
-                    type="checkbox"
+                    id="isFeatured"
                     checked={isFeatured}
                     onChange={(e) => setIsFeatured(e.target.checked)}
-                    className="w-4 h-4 text-[#B69A65]"
+                    className="accent-[#D6AD68] w-4 h-4 cursor-pointer"
                   />
-                  <span>Feature on Homepage</span>
-                </label>
+                  <label htmlFor="isFeatured" className="text-xs uppercase font-bold text-white cursor-pointer">
+                    Feature in OTT Hero
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-2 pt-6">
+                  <input
+                    type="checkbox"
+                    id="isPublished"
+                    checked={isPublished}
+                    onChange={(e) => setIsPublished(e.target.checked)}
+                    className="accent-[#D6AD68] w-4 h-4 cursor-pointer"
+                  />
+                  <label htmlFor="isPublished" className="text-xs uppercase font-bold text-white cursor-pointer">
+                    Live / Published
+                  </label>
+                </div>
               </div>
 
-              {/* Submit Buttons */}
-              <div className="pt-4 border-t border-[#E9E7E2] flex items-center justify-end gap-3">
+              <div className="pt-6 border-t border-white/10 flex justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 border border-[#E9E7E2] text-xs uppercase tracking-wider font-semibold text-[#777777] hover:bg-[#F7F6F3]"
+                  className="px-4 py-2.5 rounded-sm bg-white/5 hover:bg-white/10 text-white text-xs uppercase font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#171717] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-colors"
+                  className="btn-gold px-6 py-2.5 rounded-sm text-xs uppercase font-extrabold cursor-pointer"
                 >
-                  {editingId ? 'Save Changes' : 'Create Production'}
+                  {editingId ? 'Save Production Changes' : 'Create Production'}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+
+      {/* Video Preview Modal */}
+      <CinematicPlayerModal
+        isOpen={previewVideo.isOpen}
+        onClose={() => setPreviewVideo((prev) => ({ ...prev, isOpen: false }))}
+        videoUrl={previewVideo.url}
+        title={previewVideo.title}
+      />
     </div>
   );
 };

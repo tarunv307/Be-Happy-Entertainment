@@ -22,6 +22,10 @@ export interface Production {
   cover_url: string;
   youtube_trailer_url?: string;
   external_video_url?: string;
+  video_url?: string;
+  runtime?: string;
+  tagline?: string;
+  content_type?: 'movie' | 'short-film' | 'concert';
   director: string;
   producer: string;
   cinematographer: string;
@@ -63,6 +67,7 @@ export interface TeamMember {
   is_producer: boolean;
   social_links: {
     instagram?: string;
+    youtube?: string;
     linkedin?: string;
     imdb?: string;
     twitter?: string;

@@ -1,308 +1,357 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Play, Film } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import {
+  Play,
+  ArrowLeft,
+  Calendar,
+  Clock,
+  User,
+  Film,
+  Sparkles,
+  Share2,
+  Check,
+  Video,
+  Camera,
+  Layers,
+  ChevronRight,
+} from 'lucide-react';
 import { useData } from '../context/DataContext';
-import { VideoModal } from '../components/ui/VideoModal';
-import { Lightbox } from '../components/ui/Lightbox';
-import { ProjectCard } from '../components/ui/ProjectCard';
-import { ScrollReveal } from '../components/ui/ScrollReveal';
+import { CinematicPlayerModal } from '../components/player/CinematicPlayerModal';
+import { CinemaPosterCard } from '../components/ui/CinemaPosterCard';
 
 export const ProjectDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const { productions } = useData();
 
-  const [activeVideo, setActiveVideo] = useState<{ url: string; title: string } | null>(null);
-  const [activeImage, setActiveImage] = useState<{ url: string; title: string } | null>(null);
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
-  const production = productions.find((p) => p.slug === slug || p.id === slug);
+  // Find target production
+  const production = productions.find((p) => p.slug === slug);
 
   if (!production) {
     return (
-      <div className="min-h-screen bg-white pt-36 pb-20 text-center px-4">
-        <Film className="w-12 h-12 text-[#B69A65] mx-auto mb-4" />
-        <h1 className="font-editorial text-3xl font-semibold text-[#121212] mb-2">
-          Production Not Found
-        </h1>
-        <p className="text-sm text-[#6B6861] mb-8 font-light">
-          The requested project does not exist or may have been unlisted.
+      <div className="min-h-screen bg-[#080808] text-white pt-32 pb-20 flex flex-col items-center justify-center text-center px-4">
+        <Film className="w-16 h-16 text-[#D6AD68]/40 mb-4" />
+        <h1 className="font-cinematic text-3xl font-black">Title Not Found</h1>
+        <p className="text-[#7E7E7E] text-sm mt-2 max-w-md">
+          The requested film could not be located in the Kavin Production catalog.
         </p>
         <Link
-          to="/productions"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#121212] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-colors rounded-none"
+          to="/movies"
+          className="mt-6 btn-gold px-6 py-2.5 rounded-sm text-xs uppercase font-extrabold"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back To Productions</span>
+          Return to Movies
         </Link>
       </div>
     );
   }
 
-  // Related productions
-  const relatedProductions = productions
-    .filter((p) => p.id !== production.id && p.is_published && p.category === production.category)
-    .slice(0, 3);
+  const isVideoAvailable = Boolean(production.video_url);
+
+  // Related movies (excluding current)
+  const relatedProductions = productions.filter((p) => p.id !== production.id);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `${production.title} — Kavin Production`,
+        text: production.tagline || production.short_description,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   return (
-    <div className="bg-white pt-24 pb-24">
-      {/* Back Button Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 border-b border-[#E8E6E0] mb-8 flex items-center justify-between">
-        <Link
-          to="/productions"
-          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#6B6861] hover:text-[#121212] transition-colors editorial-hover-underline"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>All Productions</span>
-        </Link>
+    <div className="min-h-screen bg-[#080808] text-white">
+      {/* ====================================================
+          FULL-WIDTH CINEMATIC HERO BANNER
+          ==================================================== */}
+      <div className="relative w-full h-[65vh] sm:h-[75vh] min-h-[500px] overflow-hidden bg-black select-none">
+        {/* Banner Media */}
+        <img
+          src={production.cover_url || production.poster_url}
+          alt={production.title}
+          className="w-full h-full object-cover object-center filter brightness-[0.65] contrast-[1.1] scale-102"
+        />
 
-        <span className="text-[11px] uppercase tracking-widest text-[#B69A65] font-semibold">
-          {production.category} • {production.year}
-        </span>
+        {/* Cinematic atmospheric gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/80 to-transparent w-full md:w-3/4" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent" />
+
+        {/* Back Navigation Button */}
+        <div className="absolute top-24 left-4 sm:left-8 z-20">
+          <Link
+            to="/movies"
+            className="px-4 py-2 rounded-full bg-black/60 hover:bg-[#D6AD68] text-white hover:text-black backdrop-blur-md border border-white/20 hover:border-[#D6AD68] text-xs uppercase tracking-wider font-semibold flex items-center gap-2 transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Movies</span>
+          </Link>
+        </div>
+
+        {/* Hero Content */}
+        <div className="absolute bottom-8 left-0 right-0 z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl flex flex-col items-start gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded-xs text-[10px] font-black uppercase tracking-[0.25em] bg-[#D6AD68] text-black">
+                {production.content_type === 'short-film' ? 'Short Film' : 'Movie'}
+              </span>
+              <span className="text-xs uppercase tracking-wider text-[#D6AD68] font-mono">
+                {production.status === 'In Production' ? 'COMING SOON 2026' : `RELEASED ${production.year}`}
+              </span>
+            </div>
+
+            <h1 className="font-cinematic font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-wide uppercase leading-tight drop-shadow-lg">
+              {production.title}
+            </h1>
+
+            {production.tagline && (
+              <p className="text-sm sm:text-base text-[#D6AD68] font-cinematic italic tracking-wider">
+                “{production.tagline}”
+              </p>
+            )}
+
+            {/* Action Buttons: Watch Trailer, Watch Movie (if available), Back to Movies */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              {/* Watch Movie (Only if video is actually available) */}
+              {isVideoAvailable && (
+                <button
+                  onClick={() => setIsPlayerOpen(true)}
+                  className="btn-gold px-7 py-3 rounded-sm flex items-center gap-2 text-xs uppercase font-extrabold cursor-pointer"
+                >
+                  <Play className="w-4 h-4 fill-black" />
+                  <span>Watch Movie</span>
+                </button>
+              )}
+
+              {/* Watch Trailer */}
+              <button
+                onClick={() => {
+                  if (isVideoAvailable) {
+                    setIsPlayerOpen(true);
+                  } else if (production.youtube_trailer_url) {
+                    window.open(production.youtube_trailer_url, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                className="px-6 py-3 rounded-sm bg-white/10 hover:bg-[#D6AD68] text-white hover:text-black border border-white/20 hover:border-[#D6AD68] text-xs uppercase tracking-wider font-extrabold flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <Film className="w-4 h-4 text-[#D6AD68]" />
+                <span>Watch Trailer</span>
+              </button>
+
+              <Link
+                to="/movies"
+                className="px-5 py-3 rounded-sm bg-white/5 hover:bg-white/15 text-[#B5B5B5] hover:text-white border border-white/10 text-xs uppercase tracking-wider font-medium transition-colors flex items-center gap-1.5"
+              >
+                <span>Back to Movies</span>
+              </Link>
+
+              <button
+                onClick={handleShare}
+                className="px-4 py-3 rounded-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs uppercase tracking-wider font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+                title="Share Film"
+              >
+                {copied ? <Check className="w-4 h-4 text-green-400" /> : <Share2 className="w-4 h-4" />}
+                <span>{copied ? 'Link Copied!' : 'Share'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Cinematic Hero Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <ScrollReveal direction="up" delay={100}>
-          <div className="relative aspect-21/9 sm:aspect-16/7 overflow-hidden border border-[#E8E6E0] bg-[#FAF9F5] group">
-            <img
-              src={production.cover_url || production.poster_url}
-              alt={production.title}
-              className="w-full h-full object-cover grayscale contrast-110 transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-end p-6 sm:p-12 text-white">
-              <span className="text-[10px] uppercase tracking-widest text-[#B69A65] font-semibold mb-2">
-                {production.status}
+      {/* ====================================================
+          MAIN DETAILS & CAST / CREW SECTION
+          ==================================================== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          {/* Left Column: Official Poster & Fast Specs */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            <div className="rounded-2xl overflow-hidden border-2 border-[#D6AD68]/40 shadow-[0_15px_40px_rgba(214,173,104,0.25)] bg-[#101010]">
+              <img
+                src={production.poster_url}
+                alt={production.title}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
+            {/* Production Specs Box */}
+            <div className="p-6 rounded-xl bg-[#121212] border border-white/10 space-y-4 text-xs">
+              <h3 className="font-cinematic font-bold text-sm text-[#D6AD68] uppercase tracking-wider">
+                Title Specifications
+              </h3>
+
+              <div className="space-y-3 text-[#B5B5B5]">
+                <div className="flex justify-between py-1 border-b border-white/5">
+                  <span className="text-[#7E7E7E]">Category:</span>
+                  <strong className="text-white">{production.category}</strong>
+                </div>
+
+                <div className="flex justify-between py-1 border-b border-white/5">
+                  <span className="text-[#7E7E7E]">Release:</span>
+                  <strong className="text-white">{production.year}</strong>
+                </div>
+
+                {production.runtime && (
+                  <div className="flex justify-between py-1 border-b border-white/5">
+                    <span className="text-[#7E7E7E]">Runtime:</span>
+                    <strong className="text-white">{production.runtime}</strong>
+                  </div>
+                )}
+
+                <div className="flex justify-between py-1 border-b border-white/5">
+                  <span className="text-[#7E7E7E]">Producer:</span>
+                  <strong className="text-white">{production.producer}</strong>
+                </div>
+
+                <div className="flex justify-between py-1 border-b border-white/5">
+                  <span className="text-[#7E7E7E]">Status:</span>
+                  <span className="text-[#D6AD68] font-bold">{production.status}</span>
+                </div>
+
+                <div className="flex justify-between py-1">
+                  <span className="text-[#7E7E7E]">Production House:</span>
+                  <strong className="text-white">Kavin Production</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Verified Story Synopsis & Verified Credits */}
+          <div className="lg:col-span-8 flex flex-col gap-8">
+            {/* Synopsis Section */}
+            <div className="p-6 sm:p-8 rounded-xl bg-[#121212] border border-white/10">
+              <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68]">
+                STORY & SYNOPSIS
               </span>
-              <h1 className="font-editorial text-3xl sm:text-5xl md:text-6xl text-white font-normal mb-4">
-                {production.title}
-              </h1>
-              <p className="text-sm sm:text-base text-neutral-300 font-light max-w-2xl line-clamp-2">
-                {production.short_description}
+              <h2 className="font-cinematic font-bold text-2xl text-white mt-1">
+                About The Film
+              </h2>
+              <p className="text-sm sm:text-base text-[#C5C5C5] leading-relaxed mt-4 font-light">
+                {production.description || production.short_description}
               </p>
             </div>
 
-            {/* Quick Play Button if YouTube Available */}
-            {production.youtube_trailer_url && (
-              <button
-                onClick={() =>
-                  setActiveVideo({ url: production.youtube_trailer_url!, title: production.title })
-                }
-                aria-label="Play Trailer"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 bg-white/90 hover:bg-[#B69A65] text-[#121212] hover:text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 cursor-pointer"
-              >
-                <Play className="w-6 h-6 fill-current ml-1" />
-              </button>
-            )}
-          </div>
-        </ScrollReveal>
-      </div>
-
-      {/* Main Details & Metadata Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left Column: Synopsis & Story */}
-          <div className="lg:col-span-8 space-y-8">
-            <ScrollReveal direction="up" delay={150}>
-              <div>
-                <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block mb-2">
-                  Project Synopsis
+            {/* Verified Cast & Crew List */}
+            {production.credits && production.credits.length > 0 && (
+              <div className="p-6 sm:p-8 rounded-xl bg-[#121212] border border-white/10">
+                <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68]">
+                  OFFICIAL VERIFIED CREDITS
                 </span>
-                <h2 className="font-editorial text-2xl sm:text-3xl text-[#121212] font-semibold mb-4">
-                  The Narrative
+                <h2 className="font-cinematic font-bold text-2xl text-white mt-1">
+                  Cast & Production Crew
                 </h2>
-                <p className="text-base text-[#6B6861] font-light leading-relaxed whitespace-pre-line">
-                  {production.description}
-                </p>
-              </div>
-            </ScrollReveal>
 
-            {/* Embedded YouTube Trailer if Available */}
-            {production.youtube_trailer_url && (
-              <ScrollReveal direction="up" delay={200}>
-                <div className="pt-6 border-t border-[#E8E6E0]">
-                  <h3 className="font-editorial text-xl font-semibold text-[#121212] mb-4">
-                    Official Preview
-                  </h3>
-                  <div className="relative aspect-16/9 bg-black border border-[#E8E6E0] overflow-hidden">
-                    <iframe
-                      src={
-                        production.youtube_trailer_url.includes('embed')
-                          ? production.youtube_trailer_url
-                          : `https://www.youtube.com/embed/${
-                              production.youtube_trailer_url.split('v=')[1]?.split('&')[0] ||
-                              production.youtube_trailer_url.split('youtu.be/')[1] ||
-                              ''
-                            }`
-                      }
-                      title={production.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full border-0"
-                    />
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                  {production.credits.map((credit, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-lg bg-white/5 border border-white/5 flex items-center justify-between"
+                    >
+                      <span className="text-xs text-[#7E7E7E] uppercase tracking-wider">
+                        {credit.role}
+                      </span>
+                      <strong className="text-sm text-white font-medium">
+                        {credit.name}
+                      </strong>
+                    </div>
+                  ))}
                 </div>
-              </ScrollReveal>
+              </div>
             )}
 
-            {/* Production Stills Gallery */}
+            {/* Behind-The-Scenes Gallery */}
             {production.gallery_images && production.gallery_images.length > 0 && (
-              <ScrollReveal direction="up" delay={250}>
-                <div className="pt-6 border-t border-[#E8E6E0]">
-                  <h3 className="font-editorial text-xl font-semibold text-[#121212] mb-4">
-                    Production Stills & Cinematography
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {production.gallery_images.map((img, idx) => (
-                      <div
-                        key={idx}
-                        onClick={() =>
-                          setActiveImage({ url: img, title: `${production.title} Still 0${idx + 1}` })
-                        }
-                        className="aspect-16/10 bg-[#FAF9F5] border border-[#E8E6E0] overflow-hidden cursor-pointer group"
-                      >
-                        <img
-                          src={img}
-                          alt={`${production.title} still`}
-                          className="w-full h-full object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-108 group-hover:grayscale-0"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-
-          {/* Right Column: Key Credits & Spec Sheet */}
-          <div className="lg:col-span-4 space-y-8">
-            <ScrollReveal direction="left" delay={200}>
-              <div className="bg-[#FAF9F5] border border-[#E8E6E0] p-8 space-y-6">
-                <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold block border-b border-[#E8E6E0] pb-2">
-                  Production Credits
+              <div className="p-6 sm:p-8 rounded-xl bg-[#121212] border border-white/10">
+                <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68]">
+                  VISUAL ARCHIVE
                 </span>
+                <h2 className="font-cinematic font-bold text-2xl text-white mt-1">
+                  Behind The Scenes & Posters
+                </h2>
 
-                <div className="space-y-4 text-xs">
-                  <div>
-                    <span className="text-[#6B6861] block text-[10px] uppercase tracking-wider">
-                      Producer
-                    </span>
-                    <span className="font-semibold text-sm text-[#121212]">
-                      {production.producer || 'Kavin'}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span className="text-[#6B6861] block text-[10px] uppercase tracking-wider">
-                      Director
-                    </span>
-                    <span className="font-semibold text-sm text-[#121212]">
-                      {production.director}
-                    </span>
-                  </div>
-
-                  {production.cinematographer && (
-                    <div>
-                      <span className="text-[#6B6861] block text-[10px] uppercase tracking-wider">
-                        Director of Photography
-                      </span>
-                      <span className="font-semibold text-sm text-[#121212]">
-                        {production.cinematographer}
-                      </span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+                  {production.gallery_images.map((imgUrl, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => setActiveImage(imgUrl)}
+                      className="group relative aspect-4/3 rounded-lg overflow-hidden bg-black border border-white/10 cursor-pointer"
+                    >
+                      <img
+                        src={imgUrl}
+                        alt={`Gallery ${idx + 1}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors" />
                     </div>
-                  )}
-
-                  {production.editor && (
-                    <div>
-                      <span className="text-[#6B6861] block text-[10px] uppercase tracking-wider">
-                        Editor
-                      </span>
-                      <span className="font-semibold text-sm text-[#121212]">
-                        {production.editor}
-                      </span>
-                    </div>
-                  )}
-
-                  {production.cast_and_crew && (
-                    <div>
-                      <span className="text-[#6B6861] block text-[10px] uppercase tracking-wider">
-                        Cast & Notable Crew
-                      </span>
-                      <p className="text-[#6B6861] font-light mt-0.5 leading-relaxed">
-                        {production.cast_and_crew}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Additional Credits JSON */}
-                  {production.credits && production.credits.length > 0 && (
-                    <div className="pt-3 border-t border-[#E8E6E0] space-y-2">
-                      {production.credits.map((cr, idx) => (
-                        <div key={idx} className="flex justify-between items-baseline text-xs">
-                          <span className="text-[#6B6861]">{cr.role}</span>
-                          <span className="font-medium text-[#121212] text-right">{cr.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Direct Enquiry for Similar Project */}
-                <div className="pt-4 border-t border-[#E8E6E0]">
-                  <Link
-                    to="/contact"
-                    className="w-full text-center block py-3.5 bg-[#121212] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-colors rounded-none shadow-xs"
-                  >
-                    Enquire For Similar Project
-                  </Link>
+                  ))}
                 </div>
               </div>
-            </ScrollReveal>
+            )}
           </div>
         </div>
+
+        {/* ====================================================
+            RELATED TITLES CAROUSEL
+            ==================================================== */}
+        {relatedProductions.length > 0 && (
+          <div className="mt-20 pt-12 border-t border-white/10">
+            <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68]">
+              MORE RELEASES
+            </span>
+            <h2 className="font-cinematic font-black text-2xl sm:text-3xl text-white uppercase tracking-wide mt-1 mb-8">
+              EXPLORE MORE FROM KAVIN PRODUCTION
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedProductions.map((related) => (
+                <CinemaPosterCard
+                  key={related.id}
+                  production={related}
+                  onPlayTrailer={(videoUrl, title) => {
+                    setIsPlayerOpen(true);
+                  }}
+                  aspectRatio="poster"
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Related Productions */}
-      {relatedProductions.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 border-t border-[#E8E6E0]">
-          <ScrollReveal direction="up" delay={100}>
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="font-editorial text-2xl font-semibold text-[#121212]">
-                Related {production.category}
-              </h3>
-              <Link
-                to="/productions"
-                className="text-xs uppercase tracking-wider text-[#B69A65] font-semibold hover:underline"
-              >
-                View All
-              </Link>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedProductions.map((p, idx) => (
-              <ScrollReveal key={p.id} direction="up" delay={100 + idx * 100}>
-                <ProjectCard production={p} />
-              </ScrollReveal>
-            ))}
+      {/* Lightbox Modal for Gallery Images */}
+      {activeImage && (
+        <div
+          className="fixed inset-0 z-9999 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setActiveImage(null)}
+        >
+          <div className="max-w-4xl max-h-[85vh] relative" onClick={(e) => e.stopPropagation()}>
+            <img src={activeImage} alt="Expanded gallery item" className="max-w-full max-h-[80vh] rounded-lg shadow-2xl" />
+            <button
+              onClick={() => setActiveImage(null)}
+              className="absolute top-2 right-2 px-3 py-1 bg-black/80 text-white rounded-full text-xs font-mono"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
 
-      {/* Video Modal */}
-      {activeVideo && (
-        <VideoModal
-          isOpen={!!activeVideo}
-          videoUrl={activeVideo.url}
-          title={activeVideo.title}
-          onClose={() => setActiveVideo(null)}
-        />
-      )}
-
-      {/* Lightbox */}
-      {activeImage && (
-        <Lightbox
-          isOpen={!!activeImage}
-          imageUrl={activeImage.url}
-          title={activeImage.title}
-          onClose={() => setActiveImage(null)}
+      {/* Cinematic Video Player Modal */}
+      {isVideoAvailable && (
+        <CinematicPlayerModal
+          isOpen={isPlayerOpen}
+          onClose={() => setIsPlayerOpen(false)}
+          videoUrl={production.video_url!}
+          title={production.title}
+          posterUrl={production.poster_url}
         />
       )}
     </div>

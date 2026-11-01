@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Film, Music, Sliders, CheckCircle2 } from 'lucide-react';
 import { useData } from '../context/DataContext';
-import { ScrollReveal } from '../components/ui/ScrollReveal';
-import { TypographyMarquee } from '../components/ui/TypographyMarquee';
 
 export const ServicesPage: React.FC = () => {
   const { services } = useData();
@@ -13,17 +11,7 @@ export const ServicesPage: React.FC = () => {
     .filter((s) => s.is_published)
     .sort((a, b) => a.display_order - b.display_order);
 
-  const filterCategories = [
-    'All',
-    'Cinema',
-    'Commercial',
-    'Music',
-    'Craft',
-    'Post-Production',
-    'Stills',
-    'Digital',
-    'Events',
-  ];
+  const filterCategories = ['All', 'Cinema', 'Live Events', 'Audio'];
 
   const filteredServices =
     selectedFilter === 'All'
@@ -31,132 +19,107 @@ export const ServicesPage: React.FC = () => {
       : publishedServices.filter((s) => s.category === selectedFilter);
 
   return (
-    <div className="bg-white pt-28 pb-24 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <ScrollReveal direction="up" delay={100}>
-          <div className="mb-16 text-center max-w-3xl mx-auto">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#B69A65] font-semibold block mb-3">
-              Production Disciplines
-            </span>
-            <h1 className="font-editorial text-4xl sm:text-6xl font-normal text-[#121212] tracking-tight mb-4">
-              OUR EXPERTISE.
-            </h1>
-            <p className="text-sm sm:text-base text-[#6B6861] font-light leading-relaxed">
-              From initial concept incubation to theatrical DCP mastering, Kavin Production provides
-              full-spectrum creative and physical media production services.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Filter Pills */}
-        <ScrollReveal direction="up" delay={200}>
-          <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-16 border-b border-[#E8E6E0] scrollbar-none">
-            {filterCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedFilter(cat)}
-                className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer rounded-none ${
-                  selectedFilter === cat
-                    ? 'bg-[#121212] text-white shadow-xs'
-                    : 'bg-[#FAF9F5] text-[#6B6861] hover:text-[#121212] hover:bg-[#E8E6E0]'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </ScrollReveal>
-
-        {/* Services List / Cards */}
-        <div className="space-y-16">
-          {filteredServices.map((service, index) => (
-            <ScrollReveal key={service.id} direction="up" delay={100}>
-              <div
-                id={service.slug}
-                className="border border-[#E8E6E0] bg-[#FAF9F5] overflow-hidden p-6 sm:p-10 transition-all duration-400 hover:border-[#B69A65] hover:shadow-md rounded-none"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                  {/* Visual */}
-                  <div className="lg:col-span-5 relative aspect-16/10 overflow-hidden bg-[#E8E6E0] border border-[#E8E6E0] group">
-                    <img
-                      src={service.image_url}
-                      alt={service.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover grayscale transition-transform duration-700 ease-out group-hover:scale-108 group-hover:grayscale-0"
-                    />
-                    <div className="absolute top-4 left-4 bg-white/95 px-3 py-1 text-xs font-mono font-bold text-[#121212] border border-[#E8E6E0]">
-                      0{service.display_order || index + 1}
-                    </div>
-                  </div>
-
-                  {/* Information */}
-                  <div className="lg:col-span-7 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold">
-                        {service.category}
-                      </span>
-                      <span className="text-[#E8E6E0]">•</span>
-                      <span className="text-xs text-[#6B6861] font-medium italic">
-                        {service.tagline}
-                      </span>
-                    </div>
-
-                    <h2 className="font-editorial text-2xl sm:text-4xl text-[#121212] font-semibold">
-                      {service.title}
-                    </h2>
-
-                    <p className="text-sm text-[#6B6861] font-light leading-relaxed">
-                      {service.description}
-                    </p>
-
-                    {/* Workflow Steps */}
-                    {service.workflow_steps && service.workflow_steps.length > 0 && (
-                      <div className="pt-3 border-t border-[#E8E6E0]">
-                        <span className="text-[10px] uppercase tracking-wider font-semibold text-[#121212] block mb-2">
-                          Production Workflow
-                        </span>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#6B6861]">
-                          {service.workflow_steps.map((step, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#B69A65]" />
-                              <span>{step}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Deliverables */}
-                    {service.deliverables && service.deliverables.length > 0 && (
-                      <div className="pt-2 text-xs text-[#6B6861]">
-                        <span className="font-medium text-[#121212]">Deliverables: </span>
-                        {service.deliverables.join(' • ')}
-                      </div>
-                    )}
-
-                    {/* Action Link */}
-                    <div className="pt-4 flex items-center gap-4">
-                      <Link
-                        to="/contact"
-                        state={{ defaultType: service.title }}
-                        className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#121212] text-white text-xs uppercase tracking-widest font-semibold hover:bg-[#B69A65] transition-all rounded-none shadow-xs group"
-                      >
-                        <span>Commission This Service</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#B69A65] group-hover:text-white transition-colors" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+    <div className="bg-[#080808] text-white pt-24 pb-24 min-h-screen">
+      {/* Header */}
+      <div className="relative border-b border-white/10 bg-gradient-to-b from-[#18130B] via-[#0E0E0E] to-[#080808] py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+          <span className="px-3 py-1 rounded-xs text-[10px] font-black uppercase tracking-[0.25em] bg-[#D6AD68] text-black inline-block mb-3">
+            PRODUCTION CAPABILITIES
+          </span>
+          <h1 className="font-cinematic font-black text-3xl sm:text-5xl text-white tracking-wide uppercase">
+            SERVICES & EXPERTISE
+          </h1>
+          <p className="text-sm sm:text-base text-[#B5B5B5] font-light mt-3 leading-relaxed">
+            From initial concept writing to theatrical cinema distribution and live stage concert audio engineering.
+          </p>
         </div>
       </div>
 
-      {/* Marquee Footer Accent */}
-      <div className="mt-20">
-        <TypographyMarquee speed="slow" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        {/* Filter Pills */}
+        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-14 border-b border-white/10 no-scrollbar">
+          {filterCategories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedFilter(cat)}
+              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer rounded-xs ${
+                selectedFilter === cat
+                  ? 'bg-[#D6AD68] text-black shadow-md'
+                  : 'bg-white/5 text-[#B5B5B5] hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Services List */}
+        <div className="space-y-12">
+          {filteredServices.map((service, index) => (
+            <div
+              key={service.id}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 rounded-2xl bg-[#121212] border border-white/10 hover:border-[#D6AD68]/40 transition-all duration-300"
+            >
+              {/* Image Box */}
+              <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 shadow-lg group">
+                  <img
+                    src={service.image_url}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                </div>
+              </div>
+
+              {/* Text Info */}
+              <div className={`lg:col-span-7 flex flex-col items-start gap-4 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#D6AD68] bg-[#D6AD68]/15 px-2.5 py-0.5 rounded-xs border border-[#D6AD68]/30">
+                    {service.category}
+                  </span>
+                </div>
+
+                <h2 className="font-cinematic font-bold text-2xl sm:text-3xl text-white">
+                  {service.title}
+                </h2>
+
+                <p className="text-sm text-[#D6AD68] font-cinematic italic">
+                  “{service.tagline}”
+                </p>
+
+                <p className="text-xs sm:text-sm text-[#B5B5B5] leading-relaxed font-light">
+                  {service.description || service.short_description}
+                </p>
+
+                {/* Workflow Steps */}
+                {service.workflow_steps && service.workflow_steps.length > 0 && (
+                  <div className="w-full pt-3 border-t border-white/10">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#7E7E7E] block mb-2">
+                      Key Process & Execution
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {service.workflow_steps.map((step, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-[#C5C5C5]">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#D6AD68] shrink-0" />
+                          <span>{step}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <Link
+                  to="/contact"
+                  className="mt-2 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#D6AD68] hover:text-white font-bold"
+                >
+                  <span>Inquire Regarding {service.title}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

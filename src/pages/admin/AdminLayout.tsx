@@ -13,9 +13,11 @@ import {
   Menu,
   X,
   Database,
+  Music,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
+import { KavinLogo } from '../../components/brand/KavinLogo';
 
 export const AdminLayout: React.FC = () => {
   const { user, isAuthenticated, isLoading, logout, isDemoMode } = useAuth();
@@ -26,10 +28,10 @@ export const AdminLayout: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F7F6F3] flex items-center justify-center">
+      <div className="min-h-screen bg-[#080808] flex items-center justify-center text-white">
         <div className="text-center space-y-3">
-          <Film className="w-8 h-8 text-[#B69A65] animate-spin mx-auto" />
-          <p className="text-xs uppercase tracking-widest text-[#777777]">
+          <Film className="w-8 h-8 text-[#D6AD68] animate-spin mx-auto" />
+          <p className="text-xs uppercase tracking-widest text-[#B5B5B5]">
             Verifying Admin Session...
           </p>
         </div>
@@ -45,10 +47,10 @@ export const AdminLayout: React.FC = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-    { name: 'Productions', path: '/admin/productions', icon: Film },
-    { name: 'Services', path: '/admin/services', icon: Layers },
-    { name: 'Team Members', path: '/admin/team', icon: Users },
-    { name: 'Gallery', path: '/admin/gallery', icon: Image },
+    { name: 'Productions & OTT', path: '/admin/productions', icon: Film },
+    { name: 'Services & Concerts', path: '/admin/services', icon: Layers },
+    { name: 'Team & Artists', path: '/admin/team', icon: Users },
+    { name: 'Media Archive', path: '/admin/gallery', icon: Image },
     {
       name: 'Enquiries',
       path: '/admin/enquiries',
@@ -64,25 +66,18 @@ export const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F6F3] flex">
+    <div className="min-h-screen bg-[#0A0A0A] text-white flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-white border-r border-[#E9E7E2] justify-between z-20">
+      <aside className="hidden md:flex flex-col w-64 bg-[#121212] border-r border-white/10 justify-between z-20">
         <div>
           {/* Logo & Brand */}
-          <div className="p-6 border-b border-[#E9E7E2]">
+          <div className="p-6 border-b border-white/10">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-[#171717] rounded-xs flex items-center justify-center text-white">
-                <Film className="w-4 h-4 text-[#B69A65]" />
-              </div>
-              <div>
-                <span className="font-cinematic text-sm font-bold tracking-widest text-[#171717] block">
-                  KAVIN CMS
-                </span>
-                <span className="text-[9px] uppercase tracking-wider text-[#777777]">
-                  Studio Control Panel
-                </span>
-              </div>
+              <KavinLogo variant="compact" size="sm" />
             </Link>
+            <span className="text-[9px] uppercase tracking-[0.25em] text-[#7E7E7E] block mt-2 font-mono">
+              STUDIO CMS PORTAL
+            </span>
           </div>
 
           {/* Navigation Links */}
@@ -93,22 +88,25 @@ export const AdminLayout: React.FC = () => {
                   ? location.pathname === '/admin'
                   : location.pathname.startsWith(item.path);
 
+              const Icon = item.icon;
+
               return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center justify-between px-3.5 py-2.5 text-xs font-medium uppercase tracking-wider transition-colors ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${
                     isActive
-                      ? 'bg-[#171717] text-white font-semibold'
-                      : 'text-[#777777] hover:bg-[#F7F6F3] hover:text-[#171717]'
+                      ? 'bg-[#D6AD68] text-black font-bold shadow-md'
+                      : 'text-[#B5B5B5] hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <item.icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4" />
                     <span>{item.name}</span>
                   </div>
-                  {item.badge && (
-                    <span className="px-1.5 py-0.5 text-[10px] bg-[#B69A65] text-white font-bold rounded-full">
+
+                  {item.badge !== null && item.badge !== undefined && (
+                    <span className="w-5 h-5 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}
@@ -118,89 +116,76 @@ export const AdminLayout: React.FC = () => {
           </nav>
         </div>
 
-        {/* Footer / Database Status & Logout */}
-        <div className="p-4 border-t border-[#E9E7E2] space-y-3">
-          <div className="px-3 py-2 bg-[#F7F6F3] border border-[#E9E7E2] text-[11px] flex items-center gap-2 text-[#777777]">
-            <Database className="w-3.5 h-3.5 text-[#B69A65]" />
-            <span>{isDemoMode ? 'Local / Demo Store' : 'Live Supabase Connected'}</span>
+        {/* User Profile & Footer Actions */}
+        <div className="p-4 border-t border-white/10 space-y-3">
+          <div className="flex items-center justify-between text-xs text-[#8E8E8E] px-2">
+            <span className="truncate max-w-[140px]">{user?.email}</span>
+            <span className="text-[9px] font-mono uppercase text-[#D6AD68] px-1.5 py-0.5 rounded-xs bg-[#D6AD68]/15 border border-[#D6AD68]/30">
+              {isDemoMode ? 'Local' : 'Live'}
+            </span>
           </div>
 
-          <div className="flex items-center justify-between px-2 text-xs">
-            <span className="text-[#777777] truncate max-w-[120px]">{user?.email}</span>
-            <button
-              onClick={handleLogout}
-              title="Log Out"
-              className="text-[#777777] hover:text-red-600 transition-colors cursor-pointer"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
+          <Link
+            to="/"
+            target="_blank"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 text-[#B5B5B5] hover:text-white text-xs transition-colors"
+          >
+            <span>View Public OTT</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-300 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Navbar */}
-        <header className="h-16 bg-white border-b border-[#E9E7E2] flex items-center justify-between px-4 sm:px-8">
+        {/* Mobile Top Header */}
+        <header className="md:hidden flex items-center justify-between p-4 bg-[#121212] border-b border-white/10">
+          <KavinLogo variant="compact" size="sm" />
+
           <button
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="md:hidden p-2 text-[#171717]"
+            className="p-2 text-[#D6AD68]"
           >
-            {mobileSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-
-          <div className="hidden md:block">
-            <span className="text-xs uppercase tracking-widest text-[#B69A65] font-semibold">
-              KAVIN PRODUCTION OFFICIAL CMS
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Link
-              to="/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#777777] hover:text-[#171717] transition-colors"
-            >
-              <span>View Public Website</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </Link>
-          </div>
         </header>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Sidebar Overlay */}
         {mobileSidebarOpen && (
-          <div className="md:hidden bg-white border-b border-[#E9E7E2] p-4 space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => setMobileSidebarOpen(false)}
-                className="flex items-center justify-between p-2.5 text-xs uppercase tracking-wider text-[#171717]"
-              >
-                <div className="flex items-center gap-3">
-                  <item.icon className="w-4 h-4 text-[#B69A65]" />
+          <div className="md:hidden fixed inset-0 z-50 bg-black/95 pt-20 px-6 pb-6 flex flex-col justify-between">
+            <nav className="space-y-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setMobileSidebarOpen(false)}
+                  className="flex items-center gap-3 p-3 text-lg font-cinematic font-bold text-white hover:text-[#D6AD68]"
+                >
+                  <item.icon className="w-5 h-5 text-[#D6AD68]" />
                   <span>{item.name}</span>
-                </div>
-                {item.badge && (
-                  <span className="px-1.5 py-0.5 text-[10px] bg-[#B69A65] text-white rounded-full">
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </nav>
+
             <button
               onClick={handleLogout}
-              className="w-full text-left p-2.5 text-xs uppercase tracking-wider text-red-600 flex items-center gap-3"
+              className="w-full py-3 bg-red-900 text-white rounded-lg text-xs font-bold uppercase tracking-wider"
             >
-              <LogOut className="w-4 h-4" />
-              <span>Log Out</span>
+              Sign Out
             </button>
           </div>
         )}
 
-        {/* Child Page Outlet */}
-        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
+        {/* Main Routed Content */}
+        <main className="flex-1 p-6 sm:p-10 overflow-y-auto">
           <Outlet />
         </main>
       </div>

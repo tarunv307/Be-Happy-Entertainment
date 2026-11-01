@@ -25,3 +25,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw uncompressed assets directory
+ect/
+
+# Large local video files (>40MB, hosted on CDN or YouTube in production)
+public/media/game-not-over.mp4
+public/media/padikathavan.mp4

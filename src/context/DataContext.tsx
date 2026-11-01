@@ -63,12 +63,12 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 const LOCAL_STORAGE_KEYS = {
-  PRODUCTIONS: 'kavin_productions',
-  SERVICES: 'kavin_services',
-  TEAM: 'kavin_team',
-  GALLERY: 'kavin_gallery',
-  ENQUIRIES: 'kavin_enquiries',
-  SETTINGS: 'kavin_settings',
+  PRODUCTIONS: 'kavin_ott_v3_productions',
+  SERVICES: 'kavin_ott_v3_services',
+  TEAM: 'kavin_ott_v3_team',
+  GALLERY: 'kavin_ott_v3_gallery',
+  ENQUIRIES: 'kavin_ott_v3_enquiries',
+  SETTINGS: 'kavin_ott_v3_settings',
 };
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
