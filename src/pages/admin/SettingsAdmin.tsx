@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import { Save, RefreshCw, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Save, RefreshCw, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
 export const SettingsAdmin: React.FC = () => {
   const { companySettings, updateCompanySettings, resetToDefaults } = useData();
 
   const [formData, setFormData] = useState({ ...companySettings });
+  const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Sync formData whenever companySettings loads from Supabase or storage
+  useEffect(() => {
+    if (companySettings) {
+      setFormData({ ...companySettings });
+    }
+  }, [companySettings]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -15,9 +24,16 @@ export const SettingsAdmin: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateCompanySettings(formData);
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+    setIsSaving(true);
+    setErrorMessage(null);
+    const success = await updateCompanySettings(formData);
+    setIsSaving(false);
+    if (success) {
+      setIsSaved(true);
+      setTimeout(() => setIsSaved(false), 4000);
+    } else {
+      setErrorMessage('Failed to synchronize with Supabase. Check network connection.');
+    }
   };
 
   const handleReset = () => {
@@ -50,9 +66,16 @@ export const SettingsAdmin: React.FC = () => {
       </div>
 
       {isSaved && (
-        <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>Settings successfully saved and synchronized across the platform.</span>
+        <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs flex items-center gap-2 animate-fade-in">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>Settings successfully saved and synchronized across the platform and database!</span>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="p-4 rounded-xl bg-red-950/40 border border-red-500/40 text-red-300 text-xs flex items-center gap-2 animate-fade-in">
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+          <span>{errorMessage}</span>
         </div>
       )}
 
@@ -226,13 +249,24 @@ export const SettingsAdmin: React.FC = () => {
         <div className="pt-6 border-t border-white/10 flex justify-end">
           <button
             type="submit"
-            className="btn-gold px-8 py-3 rounded-sm text-xs uppercase font-extrabold flex items-center gap-2 cursor-pointer"
+            disabled={isSaving}
+            className="btn-gold px-8 py-3 rounded-sm text-xs uppercase font-extrabold flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Save className="w-4 h-4 fill-black" />
-            <span>Save All Studio Settings</span>
+            {isSaving ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-black" />
+                <span>Saving to Database...</span>
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4 fill-black" />
+                <span>Save All Studio Settings</span>
+              </>
+            )}
           </button>
         </div>
       </form>
     </div>
   );
 };
+

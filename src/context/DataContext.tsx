@@ -427,12 +427,22 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Company Settings
   const updateCompanySettings = async (updates: Partial<CompanySettings>): Promise<boolean> => {
-    setCompanySettings((prev) => ({ ...prev, ...updates }));
+    const updatedSettings = { ...companySettings, ...updates };
+    setCompanySettings(updatedSettings);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.SETTINGS, JSON.stringify(updatedSettings));
+
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('company_settings').upsert({ id: 1, ...updates });
+        const { error } = await supabase
+          .from('company_settings')
+          .upsert({ id: 1, ...updates, updated_at: new Date().toISOString() });
+        if (error) {
+          console.error('Failed to update company settings in Supabase:', error);
+          return false;
+        }
       } catch (err) {
         console.error('Failed to update company settings in Supabase:', err);
+        return false;
       }
     }
     return true;

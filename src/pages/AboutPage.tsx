@@ -2,8 +2,11 @@ import React from 'react';
 import { Film, Music, Radio, Award, Compass, Eye, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { KavinLogo } from '../components/brand/KavinLogo';
+import { useData } from '../context/DataContext';
 
 export const AboutPage: React.FC = () => {
+  const { companySettings } = useData();
+
   const capabilities = [
     {
       title: 'Feature Films',
@@ -40,15 +43,16 @@ export const AboutPage: React.FC = () => {
             </span>
 
             <h1 className="font-cinematic font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-wide uppercase leading-tight">
-              DREAM. CREATE. ENTERTAIN.
+              {companySettings?.tagline || 'DREAM. CREATE. ENTERTAIN.'}
             </h1>
 
             <p className="text-base sm:text-lg text-[#D6AD68] font-cinematic italic tracking-wider">
-              “EVERY FRAME TELLS A STORY.”
+              “{companySettings?.producer_philosophy || 'EVERY FRAME TELLS A STORY.'}”
             </p>
 
             <p className="text-sm sm:text-base text-[#B5B5B5] leading-relaxed max-w-2xl font-light">
-              Be Happy Entertainment is a creative entertainment house where cinema and sound converge. From evocative feature films and short cinema to electrifying live concerts, we craft experiences that linger in minds and hearts.
+              {companySettings?.company_about ||
+                'Be Happy Entertainment is a creative entertainment house where cinema and sound converge. From evocative feature films and short cinema to electrifying live concerts, we craft experiences that linger in minds and hearts.'}
             </p>
           </div>
         </div>
@@ -61,8 +65,8 @@ export const AboutPage: React.FC = () => {
         <div className="rounded-2xl overflow-hidden border border-[#D6AD68]/40 bg-[#121212] shadow-2xl">
           <div className="relative aspect-21/9 sm:aspect-16/7 w-full overflow-hidden">
             <img
-              src="/media/kavin-director-banner.png"
-              alt="Kavin — Producer, Director & Sound Engineer"
+              src={companySettings?.producer_photo_url || '/media/kavin-director-banner.png'}
+              alt={`${companySettings?.producer_name || 'Kavin'} — ${companySettings?.producer_title || 'Producer, Director & Sound Engineer'}`}
               className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
@@ -72,10 +76,10 @@ export const AboutPage: React.FC = () => {
                   LEADERSHIP
                 </span>
                 <h3 className="font-cinematic font-black text-2xl sm:text-3xl text-white mt-1">
-                  Kavin
+                  {companySettings?.producer_name || 'Kavin'}
                 </h3>
                 <p className="text-xs text-[#B5B5B5]">
-                  Producer, Director & Sound Engineer | ECE Graduate & DJ
+                  {companySettings?.producer_title || 'Producer, Director & Sound Engineer | ECE Graduate & DJ'}
                 </p>
               </div>
 
@@ -91,7 +95,8 @@ export const AboutPage: React.FC = () => {
                 Creative Philosophy
               </h4>
               <p className="font-light">
-                “Good Stories, Better People. Same Passion, Different Medium.” With a foundational background in Electronics and Communication Engineering (ECE), Kavin bridges technical precision with evocative storytelling. Every narrative decision is built on empathy, and every acoustic cue is engineered for emotional clarity.
+                {companySettings?.producer_bio ||
+                  '“Good Stories, Better People. Same Passion, Different Medium.” With a foundational background in Electronics and Communication Engineering (ECE), Kavin bridges technical precision with evocative storytelling. Every narrative decision is built on empathy, and every acoustic cue is engineered for emotional clarity.'}
               </p>
             </div>
 
@@ -100,7 +105,7 @@ export const AboutPage: React.FC = () => {
                 The Filmmaking Routine
               </h4>
               <p className="font-light">
-                “Shoot. Edit. Mix. Create. Repeat.” From writing and directing titles like Mudhal Kadhal, Padikathavan, and Game to engineering live festival sound rigs, Be Happy Entertainment is rooted in relentless hands-on creative execution.
+                “Shoot. Edit. Mix. Create. Repeat.” From writing and directing titles like Mudhal Kadhal, Padikathavan, and Game to engineering live festival sound rigs, {companySettings?.brand_name || 'Be Happy Entertainment'} is rooted in relentless hands-on creative execution.
               </p>
             </div>
           </div>
@@ -118,7 +123,8 @@ export const AboutPage: React.FC = () => {
             </div>
             <h3 className="font-cinematic font-bold text-xl text-white">Our Vision</h3>
             <p className="text-sm text-[#B5B5B5] leading-relaxed font-light">
-              To build a celebrated modern entertainment company where cinematic storytelling, short films, and high-energy live concerts resonate globally, pushing technical boundaries while honoring human emotion.
+              {companySettings?.vision_statement ||
+                'To build a celebrated modern entertainment company where cinematic storytelling, short films, and high-energy live concerts resonate globally, pushing technical boundaries while honoring human emotion.'}
             </p>
           </div>
 
@@ -128,7 +134,8 @@ export const AboutPage: React.FC = () => {
             </div>
             <h3 className="font-cinematic font-bold text-xl text-white">Our Mission</h3>
             <p className="text-sm text-[#B5B5B5] leading-relaxed font-light">
-              To pioneer compelling visual and musical experiences by blending technical craft with courageous narrative direction — creating films and live performances that move audiences and leave a lasting impression.
+              {companySettings?.mission_statement ||
+                'To pioneer compelling visual and musical experiences by blending technical craft with courageous narrative direction — creating films and live performances that move audiences and leave a lasting impression.'}
             </p>
           </div>
         </div>

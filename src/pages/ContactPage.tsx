@@ -131,10 +131,10 @@ export const ContactPage: React.FC = () => {
                       Creative Leadership
                     </h4>
                     <p className="text-white font-medium mt-1">
-                      Kavin
+                      {companySettings?.producer_name || 'Kavin'}
                     </p>
                     <p className="text-xs text-[#8E8E8E] font-light mt-0.5">
-                      Producer, Director & Sound Engineer | ECE Graduate & DJ
+                      {companySettings?.producer_title || 'Producer, Director & Sound Engineer | ECE Graduate & DJ'}
                     </p>
                   </div>
                 </div>
@@ -148,13 +148,51 @@ export const ContactPage: React.FC = () => {
                       Production Banners
                     </h4>
                     <p className="text-[#8E8E8E] font-light mt-1">
-                      Be Happy Entertainment
+                      {companySettings?.brand_name || 'Be Happy Entertainment'}
                     </p>
                     <p className="text-xs text-[#D6AD68] font-mono mt-0.5">
-                      “Every Frame Tells a Story”
+                      “{companySettings?.tagline || 'Every Frame Tells a Story'}”
                     </p>
                   </div>
                 </div>
+
+                {companySettings?.contact_email && (
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 bg-white/5 border border-white/10 text-[#D6AD68] rounded-lg mt-0.5">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs uppercase tracking-wider font-semibold text-white">
+                        Direct Email
+                      </h4>
+                      <a
+                        href={`mailto:${companySettings.contact_email}`}
+                        className="text-xs text-[#D6AD68] hover:underline mt-1 block font-mono"
+                      >
+                        {companySettings.contact_email}
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {companySettings?.contact_phone && (
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 bg-white/5 border border-white/10 text-[#D6AD68] rounded-lg mt-0.5">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs uppercase tracking-wider font-semibold text-white">
+                        Contact Line
+                      </h4>
+                      <a
+                        href={`tel:${companySettings.contact_phone}`}
+                        className="text-xs text-white hover:text-[#D6AD68] mt-1 block font-mono"
+                      >
+                        {companySettings.contact_phone}
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Official Social Media Channels */}
@@ -164,7 +202,7 @@ export const ContactPage: React.FC = () => {
                 </span>
                 <div className="flex gap-3">
                   <a
-                    href="https://www.instagram.com/be_happy_entertainment24/"
+                    href={companySettings?.instagram_url || 'https://www.instagram.com/be_happy_entertainment24/'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-[#D6AD68] hover:text-black border border-white/10 text-white flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider transition-all"
@@ -173,7 +211,7 @@ export const ContactPage: React.FC = () => {
                     <span>Instagram</span>
                   </a>
                   <a
-                    href="https://youtube.com/@kavin_kp"
+                    href={companySettings?.youtube_url || 'https://youtube.com/@kavin_kp'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-red-600 text-white border border-white/10 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider transition-all"

@@ -4,6 +4,7 @@ import { Search, Film, Music, Tv, Info, Mail, Lock, Menu, X, Sparkles, User, Hom
 import { InstagramIcon, YoutubeIcon } from '../ui/SocialIcons';
 import { KavinLogo } from '../brand/KavinLogo';
 import { GlobalSearchModal } from '../ui/GlobalSearchModal';
+import { useData } from '../../context/DataContext';
 
 interface NavbarProps {
   onReplayIntro?: () => void;
@@ -11,10 +12,16 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) => {
+  const { companySettings } = useData();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
+
+  const instagramUrl = companySettings?.instagram_url || 'https://www.instagram.com/be_happy_entertainment24/';
+  const youtubeUrl = companySettings?.youtube_url || 'https://youtube.com/@kavin_kp';
+  const brandName = companySettings?.brand_name || 'BE HAPPY ENTERTAINMENT';
+  const producerName = companySettings?.producer_name || 'Kavin';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
 
               {/* Official Instagram */}
               <a
-                href="https://www.instagram.com/be_happy_entertainment24/"
+                href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full text-[#B5B5B5] hover:text-[#D6AD68] hover:bg-white/10 flex items-center justify-center transition-colors"
@@ -108,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
 
               {/* Official YouTube */}
               <a
-                href="https://youtube.com/@kavin_kp"
+                href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full text-[#B5B5B5] hover:text-red-500 hover:bg-white/10 flex items-center justify-center transition-colors"
@@ -249,10 +256,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
             <div className="p-3 rounded-xl bg-gradient-to-r from-[#16130E] to-[#0E0E0E] border border-[#D6AD68]/30 flex items-center justify-between">
               <div>
                 <p className="text-[11px] font-bold text-white uppercase tracking-wider">
-                  BE HAPPY ENTERTAINMENT
+                  {brandName}
                 </p>
                 <p className="text-[10px] text-[#D6AD68] font-cinematic">
-                  Directed & Produced by Kavin
+                  Directed & Produced by {producerName}
                 </p>
               </div>
               <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#D6AD68]/20 text-[#D6AD68] border border-[#D6AD68]/40 uppercase font-mono">
@@ -263,7 +270,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
             {/* Social Channels */}
             <div className="flex items-center justify-around py-2.5 bg-white/5 rounded-xl border border-white/10">
               <a
-                href="https://www.instagram.com/be_happy_entertainment24/"
+                href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-xs text-[#B5B5B5] hover:text-[#D6AD68] active:scale-95 transition-transform"
@@ -273,7 +280,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro, onPlayVideo }) =>
               </a>
               <div className="w-px h-4 bg-white/20" />
               <a
-                href="https://youtube.com/@kavin_kp"
+                href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-xs text-[#B5B5B5] hover:text-red-400 active:scale-95 transition-transform"
